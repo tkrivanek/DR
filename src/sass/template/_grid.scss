@@ -1,0 +1,27 @@
+// Grid
+
+// Create columns
+@include make-grid-columns();
+
+// Create column offsets
+// @include make-column-offset();
+
+
+
+.grid {
+    // Create grid
+    @include make-grid();
+    // No gutters
+    // Remove the negative margin from default .row, then the horizontal padding
+    // from all immediate children columns (to prevent runaway style inheritance).
+    &.no-gutters {
+        margin-left: 0;
+        margin-right: 0;
+
+        & > .col,
+        & > [class*="col-"] {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}

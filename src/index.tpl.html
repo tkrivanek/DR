@@ -1,0 +1,57 @@
+@@include('modules/_head.html')
+
+<!--[if lt IE 8]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+
+
+<div class="container">
+
+	@@include('modules/_sidebar.html')
+
+	<div class="content-container">
+
+		@@include('modules/_header.html')
+
+		<div class="page-content">
+
+			@@include('modules/page/_page-header.html', {
+			"page-title": "Warehouses"
+			})
+
+			<div class="content">
+
+				<div class="table-responsive">
+					@@include('modules/table/_table.html')
+				</div>
+				<!-- /.table-responsive -->
+
+				<div class="grid">
+					<div class="col-12"></div>
+					<div class="col-11"></div>
+					<div class="col-10"></div>
+					<div class="col-9"></div>
+					<div class="col-8"></div>
+					<div class="col-7"></div>
+					<div class="col-6"></div>
+					<div class="col-5"></div>
+					<div class="col-4"></div>
+					<div class="col-3"></div>
+					<div class="col-2"></div>
+					<div class="col-1"></div>
+				</div>
+				<!-- /.grid -->
+
+			</div>
+			<!-- /.content -->
+		</div>
+		<!-- /.page-content -->
+
+	</div>
+	<!-- /.content-container -->
+
+</div>
+<!-- /.container -->
+
+
+@@include('modules/_footer.html')

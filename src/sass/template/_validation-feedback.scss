@@ -1,0 +1,18 @@
+// Form validation
+.validation-valid {
+    border-color: functional(green) !important;
+}
+.validation-invalid {
+    border-color: functional(red) !important;
+}
+
+// Validation feedback
+.validation-feedback {
+    font-size: 12px;
+    &.validation-feedback-valid {
+        color: functional(green);
+    }
+    &.validation-feedback-invalid {
+        color: functional(red);
+    }
+}

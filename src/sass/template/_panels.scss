@@ -1,0 +1,46 @@
+////
+/// Panels
+//
+.panel {
+    background-color: $white;
+    border-radius: $radius;
+    margin-bottom: 8px;
+    &.open {
+        .panel-body {
+            display: block;
+        }
+    }
+    .panel-heading {
+        border-radius: $radius $radius 0 0;
+        padding: $size-30 / 2;
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            &:hover,
+            &:focus {
+                .panel-toggle {
+                    color: $grey-200;
+                }
+            }
+        }
+        .panel-title {
+            // text-transform: uppercase;
+            font-size: 14px;
+            margin: 0;
+        }
+        .panel-toggle {
+            @include transition(color);
+            font-size: 14px;
+            color: $grey-100;
+        }
+    }
+    .panel-body {
+        // display: none;
+        padding: $size-30 / 2;
+    }
+    .panel-footer {
+        padding: $size-30 / 2;
+    }
+}

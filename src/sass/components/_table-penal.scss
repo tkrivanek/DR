@@ -1,0 +1,120 @@
+// Table component
+%table-cell {
+    padding: $size-10 $size-10;
+    text-align: left;
+    white-space: nowrap;
+    background-color: $white;
+}
+
+// Table
+.table {
+    font-weight: 300;
+    color: grey(300);
+
+    // Thead
+    thead,
+    .thead {
+        tr {
+            th {
+                @extend %table-cell;
+                font-weight: 400;
+                font-size: $size * 0.8125;
+                border-bottom: 2px solid grey(100);
+
+                &.thead-main {
+                    font-weight: 500;
+                    font-size: $size;
+                    color: theme-colors(primary);
+                }
+            }
+        }
+    }
+
+    tbody + .thead {
+        border-top: 10px solid grey(100);
+    }
+
+    // Tbody
+    tbody {
+        tr {
+            &.active {
+                td {
+                    background-color: $grey-400;
+                }
+            }
+            &.row-total {
+                td {
+                    border-top: 2px solid grey(100);
+                    &.table-price {
+                        strong {
+                            color: theme-colors(primary);
+                        }
+                    }
+                }
+            }
+
+            // Table data
+            td {
+                @extend %table-cell;
+                @include transition(background-color);
+                line-height: 1.4;
+
+                .preostali-racuni {
+                    color: $blue;
+                }
+                
+                &.table-info,
+                &.table-price {
+                    strong {
+                        display: block;
+                    }
+                }
+
+                &.table-price {
+                    strong {
+                        color: $blue;
+                    }
+                }
+            }
+        }
+    }
+
+    ////
+    /// Table hover
+    //
+    &.table-hover {
+        tbody {
+            tr {
+                @include hover-focus {
+                    td {
+                        background-color: $hover;
+                    }
+                }
+            }
+        }
+    }
+
+    // Table OIB and BA
+    &.table-oib-ba {
+        tbody {
+            @include border-radius($radius);
+            border-bottom: 10px solid grey(100);
+
+            &.table-oib {
+                td {
+                    background-color: $blue;
+                    color: $white;
+                }
+            }
+            &.table-ba {
+                td {
+                    background-color: $blue;
+                    color: $white;
+                }
+            }
+        }
+        .table-price {
+            width: 120px;
+        }
+    }
+}
