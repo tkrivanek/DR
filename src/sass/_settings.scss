@@ -1,0 +1,176 @@
+//
+// --- [ Settings ] --- //
+//
+$enable-caret:   false !default; // Add caret arrow on all .dropdown-toggle anchors through ::after content
+$enable-rounded: true !default; // Add border-radius throughout the design
+$enable-debug:   false !default; // Visual feedback when debugging
+
+
+// --- [ Colors ] --- //
+$white:    #ffffff !default;
+$grey-100: #ededed !default;
+$grey-200: #d0d0d0 !default;
+$grey-300: #a4a4a4 !default;
+$grey-400: #767676 !default;
+$grey-500: #6c6c6c !default;
+$grey-600: #4b4b4b !default;
+$black:    #333333 !default;
+$hover:    #f1f1f1 !default;
+
+// --- [ Greys ] --- //
+$grey: () !default;
+$grey: map-merge(
+  (
+    100: $grey-100,
+    200: $grey-200,
+    300: $grey-300,
+    400: $grey-400,
+    500: $grey-500,
+    600: $grey-600
+  ),
+  $grey
+);
+
+// --- [ Functional colors ] --- //
+$yellow: #ffca3a;
+$green:  #8dc63f;
+$blue:   #1982c4;
+$red:    #ff595e;
+
+$functional-colors: () !default;
+$functional-colors: map-merge(
+  (
+    blue:   $blue,
+    red:    $red,
+    yellow: $yellow,
+    green:  $green
+  ),
+  $functional-colors
+);
+
+// --- [ Brand colors ] --- //
+$magenta:      #e20074;
+
+
+$brand-colors: () !default;
+$brand-colors: map-merge(
+  (
+    "magenta1":       $magenta
+  ),
+  $brand-colors
+);
+
+// --- [ Theme colors ] --- //
+$primary:       $magenta !default;
+$basic:         $grey-600 !default;
+$success:       $green !default;
+$info:          $blue !default;
+$warning:       $yellow !default;
+$danger:        $red !default;
+$light:         $grey-100 !default;
+$dark:          $grey-600 !default;
+
+$theme-colors: () !default;
+$theme-colors: map-merge(
+  (
+    "primary":    $primary,
+    "basic":      $basic,
+    "success":    $success,
+    "info":       $info,
+    "warning":    $warning,
+    "danger":     $danger,
+    "light":      $light,
+    "dark":       $dark
+  ),
+  $theme-colors
+);
+
+
+//
+// --- [ Size and radius ] --- //
+//
+$size:    1rem !default;
+$size-10: $size * 0.625 !default; // 10px
+$size-20: $size * 1.25 !default;  // 20px
+$size-30: $size * 1.875 !default; // 30px
+$radius:  $size * 0.5 !default;   // 8px
+
+
+//
+// --- [ Grid breakpoints ] --- //
+//
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1440px
+) !default;
+
+// Grid layout
+$grid-columns: 12 !default;
+$grid-gutter:  $size-10 !default;
+
+
+//
+// --- [ Fonts ] --- //
+//
+$font-primary:  'Roboto Condensed';
+$font-fallback: 'Helvetica, sans-serif';
+$font-fa:       'FontAwesome';
+$font:          $font-primary, $font-fallback;
+
+
+//
+// --- [ Body ] --- //
+//
+$body-bg:                   $grey-100 !default;
+$body-color:                $grey-600 !default;
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+$yiq-contrasted-threshold:  175 !default;
+
+// Customize the light and dark text colors for use in our YIQ color contrast function.
+$yiq-text-dark:             $grey-600 !default;
+$yiq-text-light:            $white !default;
+
+//
+// --- [ Links ] --- //
+//
+$link-color:                theme-colors(primary) !default;
+$link-decoration:           none !default;
+$link-hover-color:          darken($link-color, 15%) !default;
+$link-hover-decoration:     underline !default;
+
+
+// --- [ Animation ] --- //
+$ease: 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+
+// --- [ Form ] --- //
+$form-element-size:   $size * 2; // 32px on 16px font-size
+$form-element-xs:     $form-element-size - 0.5rem;
+$form-element-sm:     $form-element-size - 0.25rem;
+$form-element-lg:     $form-element-size + 0.25rem;
+$label-color-default: $grey-400;
+$label-color-primary: $primary;
+$input-border:        $white;
+
+// --- [ Sidebar ] --- //
+$sidebar-width:        250px;
+$sidebar-closed-width: 0;
+
+// --- [ Header ] --- //
+$header-height: 60px;
+
+// --- [ Nav tabs ] --- //
+$nav-tab-height: 30px;
+
+
+
+////
+/// --- [ ASSET OVERVIEW ] --- //
+//
+// --- [ Nodes ] --- //
+$node-height: $size * 3.8375; // 55px
+$node-width: 190px; 

@@ -1,0 +1,30 @@
+// Header
+.header {
+    display: flex;
+    justify-content: flex-end;
+    background-color: $white;
+    height: $header-height;
+
+    ////
+    /// Header actions
+    //
+    .header-actions {
+        display: flex;
+        padding-right: $size-30;
+
+        // User
+        .user {
+            display: flex;
+            align-items: center;
+
+            .icon {
+                font-size: 24px;
+            }
+
+            .user--name {
+                color: grey(400);
+                padding-left: $size-10;
+            }
+        }
+    }
+}

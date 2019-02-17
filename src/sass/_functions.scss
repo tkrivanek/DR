@@ -1,0 +1,48 @@
+// Functions
+
+// Functional colors
+@function functional-colors($key: "green") {
+	@if not map-has-key($functional-colors, $key) {
+		@warn "Color #{$key} not found in functional-colors map.";
+	}
+	@return map-get($functional-colors, $key);
+}
+
+// Theme colors
+@function theme-colors($key: "primary") {
+	@if not map-has-key($theme-colors, $key) {
+		@warn "Color #{$key} not found in theme-color map.";
+	}
+	@return map-get($theme-colors, $key);
+}
+
+// Brand colors
+@function brand-colors($key: "teal") {
+	@if not map-has-key($brand-colors, $key) {
+		@warn "Color #{$key} not found in brand-colors map.";
+	}
+	@return map-get($brand-colors, $key);
+}
+
+// Grey colors
+@function grey($key: "100") {
+	@if not map-has-key($grey, $key) {
+		@warn "Color #{$key} not found in grey map.";
+	}
+	@return map-get($grey, $key);
+}
+			
+// Color contrast
+@function color-yiq($color) {
+	$r: red($color);
+	$g: green($color);
+	$b: blue($color);
+
+	$yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+	@if ($yiq >= $yiq-contrasted-threshold) {
+		@return $yiq-text-dark;
+	} @else {
+		@return $yiq-text-light;
+	}
+}

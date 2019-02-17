@@ -1,0 +1,126 @@
+////
+/// Modal
+//
+.modal-open {
+    overflow: hidden;
+}
+.modal {
+    // @include transition(background-color);
+    @include transition(opacity background-color);
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    background-color: rgba($grey-600, 0);
+    &.modal-sm {
+        .modal-dialog {
+            width: 30vw;
+        }
+    }
+    &.modal-md {
+        .modal-dialog {
+            width: 50vw;
+        }
+    }
+    &.modal-lg {
+        .modal-dialog {
+            width: 70vw;
+        }
+    }
+    &.modal-xl {
+        .modal-dialog {
+            width: 80vw;
+        }
+    }
+    &.modal-xxl {
+        .modal-dialog {
+            width: 90vw;
+        }
+    }
+    &.open {
+        opacity: 1;
+        background-color: rgba($grey-600, 0.6);
+        pointer-events: auto;
+        .modal-dialog {
+            transform: scale(1);
+        }
+    }
+    
+    // Modal dialog
+    .modal-dialog {
+        @include transition(transform);
+        margin-left: auto;
+        margin-right: auto;
+        min-width: 400px;
+        transform: scale(0.9);
+        margin-top: -4%;
+    }
+
+    // Modal content
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        border-radius: $radius;
+        box-shadow: 0 0 10px $grey-600;
+        .modal-header,
+        .modal-body,
+        .modal-footer {
+            padding: $size-10;
+        }
+        // Modal header
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid $grey-100;
+            border-radius: $radius $radius 0 0;
+            background-color: $white;
+            .modal-title {
+                margin: 0;
+            }
+            .modal-close {
+                @include transition(opacity);
+                text-decoration: none;
+                opacity: 0.2;
+                font-size: 26px;
+                margin-top: -4px;
+                color: $grey-600;
+                &:hover,
+                &:focus {
+                    opacity: 1;
+                }
+            }
+        }
+        // Modal body
+        .modal-body {
+            color: $body-color;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        // Modal footer
+        .modal-footer {
+            display: flex;
+            border-top: 1px solid $grey-100;
+            border-radius: 0 0 $radius $radius;
+            background-color: $white;
+        }
+    }
+
+    // Filters
+    .filter-sidebar {
+        flex-direction: row;
+        .panel {
+            flex: 1;
+        }
+        margin-left: 0;
+        &--heading {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,75 @@
+////
+/// Buttons
+//
+.btn {
+    @include transition(color);
+    @include transition(background-color);
+    white-space: nowrap;
+    user-select: none;
+    border: 0;
+    padding: $size / 2.5 $size-10;
+    font-size: $size * 0.875;
+    background-color: grey(300);
+    color: $white;
+
+    // Hover and focus
+    @include hover-focus {
+        text-decoration: none;
+    }
+
+    // Add hand cursor to non-disabled .btn elements
+    &:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+
+    // Border radius
+    @include border-radius($radius / 2);
+
+    // Blocks
+    &.btn-block {
+        display: block;
+        width: 100%;
+    }
+
+    // Button groups
+    &.btn-group {
+        color: $white;
+        background-color: $input-border;
+    }
+
+    // Notifications
+    &[data-notification] {
+        position: relative;
+        &::after {
+            content: attr(data-notification);
+            background-color: $red;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -5px;
+            right: -3px;
+            color: $white;
+            font-size: 10px;
+            font-family: $font;
+            font-weight: 500;
+        }
+    }
+}
+
+// Brand buttons
+@each $color, $value in $brand-colors {
+    .btn-#{$color} {
+        @include button-variant($value, $value);
+    }
+}
+
+// Theme buttons
+@each $color, $value in $theme-colors {
+    .btn-#{$color} {
+        @include button-variant($value, $value);
+    }
+}

@@ -1,0 +1,27 @@
+// Lists
+%list {
+    display: flex;
+    padding: 0;
+    list-style-type: none;
+    justify-content: center;
+    
+}
+
+.list-inline {
+    @extend %list;
+    align-items: center;
+    & > li {
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+}
+
+.list-unstyled {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-column {
+    @extend %list;
+    flex-direction: column;
+}

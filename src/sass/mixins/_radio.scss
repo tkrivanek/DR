@@ -1,0 +1,12 @@
+// Radio buttons
+@mixin radio($color-radio, $circle, $radio) {
+	label {
+		color: $color-radio;
+	}
+	input[type=radio] + label:before {
+		content: $circle;
+	}
+	input[type=radio]:checked + label:before {
+		content: $radio;
+	}
+}

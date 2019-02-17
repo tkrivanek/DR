@@ -1,0 +1,32 @@
+// Page header
+// Page header
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $size / 2;
+
+    // Page title
+    .page-title {
+        display: flex;
+        align-items: center;
+        color: grey(600);
+
+        .page-title--heading {
+            @extend %text-overflow;
+            box-sizing: border-box;
+            margin-right: 30px;
+            min-width: 245px;
+            max-width: 40vw;
+        }
+    }
+
+    // Action items
+    .action-items {
+        display: flex;
+        list-style-type: none;
+        .dropdown-menu {
+            display: none;
+        }
+    }
+}

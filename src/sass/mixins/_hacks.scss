@@ -1,0 +1,25 @@
+// Firefox only hacks
+@mixin firefox {
+	@-moz-document url-prefix() {
+		@content;
+	}
+}
+
+// Disable zoom on input focus
+// Add font-size: 16px; on mobile, and return to 14px on breakpoint(sm)
+@mixin zoom() {
+	@media screen and (-webkit-min-device-pixel-ratio:0) { @content; }
+}
+
+// Clearfix
+// http://nicolasgallagher.com/micro-clearfix-hack/
+@mixin clearfix() {
+	&:before,
+	&:after {
+		content: " ";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+}

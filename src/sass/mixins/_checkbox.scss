@@ -1,0 +1,27 @@
+// Checkboxes
+@mixin checkbox($color, $box, $checkmark, $color-checked) {
+	input[type="checkbox"] + label {
+		display: inline-block;
+		line-height: 1.5;
+	}
+	input[type=checkbox] + label:before {
+		font-family: $font-fa;
+		color: $color;
+		content: $box;
+	}
+	input[type=checkbox] {
+		display:none;
+	}
+	input[type=checkbox]:checked + label:before,
+	input[type=checkbox]:checked + label {
+		content: $checkmark;
+		color: $color-checked;
+	}
+	input,
+	label {
+		&:hover,
+		&:focus {
+			cursor: pointer;
+		}
+	}
+}

@@ -1,0 +1,29 @@
+// Pagination
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    margin-top: $size-30 / 2;
+    margin-bottom: $size-30;
+    li {
+        padding: 0.1875rem 0.625rem;
+        &.current {
+            background-color: $primary;
+            border-radius: $radius / 2;
+        }
+        &.pagination-previous {
+            &::before {
+                content: '\f104';
+                font-family: $font-fa;
+            }
+        }
+        &.pagination-next {
+            &::after {
+                content: '\f105';
+                font-family: $font-fa;
+            }
+        }
+    }
+}

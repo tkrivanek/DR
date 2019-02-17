@@ -1,0 +1,81 @@
+// PLACEHOLDERS
+// http://sass-lang.com/documentation/file.SASS_REFERENCE.html#placeholders
+
+// Text overflow
+%text-overflow {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+// Labels
+%label {
+    display: block;
+    margin-bottom: $size-10 / 2;
+    font-size: $size * 0.6875;
+    font-family: $font;
+    font-weight: 400;
+    color: $label-color-default;
+}
+
+// Checkboxes
+%checkbox {
+	input[type=checkbox] {
+		display:none;
+	}
+	label {
+		font-weight: normal;
+		// font-size: 14px;
+		// padding-left: 0;
+	}
+	input,
+	label {
+		&:hover,
+		&:focus {
+			cursor: pointer;
+		}
+	}
+	input[type=checkbox] + label:before {
+		font-family: 'FontAwesome';
+		display: inline-block;
+		letter-spacing: 5px;
+	}
+	// input[type=checkbox]:checked + label:before,
+	// input[type=checkbox]:checked + label {
+		// color: $color;
+	// }
+}
+// Radio buttons
+%radio {
+	input[type=radio] {
+		display:none;
+	}
+	label {
+		font-weight: normal;
+		font-size: 14px;
+		padding-left: 0;
+	}
+	input,
+	label {
+		&:hover,
+		&:focus {
+			cursor: pointer;
+		}
+	}
+	input[type=radio] + label:before {
+		font-family: 'FontAwesome';
+		display: inline-block;
+		letter-spacing: 5px;
+	}
+}
+
+// Tab triangles
+%tab-triangle {
+	content: '';
+	position: absolute;
+	top: 0;
+	width: 0;
+	height: 0;
+	border-top: $nav-tab-height solid $white;
+}

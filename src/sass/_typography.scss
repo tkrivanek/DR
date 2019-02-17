@@ -1,0 +1,31 @@
+////
+/// Typography
+//
+@font-face {
+  font-family: 'Tele-Normal';
+  src: url('assets/fonts/tele-grotesknor-webfont.eot');
+  src: url('assets/fonts/tele-grotesknor-webfont.eot?#iefix') format('embedded-opentype'),
+       url('assets/fonts/tele-grotesknor-webfont.woff') format('woff'),
+       url('assets/fonts/tele-grotesknor-webfont.ttf')  format('truetype'),
+       url('assets/fonts/tele-grotesknor-webfont.svg#svgFontName') format('svg');
+}
+
+@font-face {
+  font-family: 'Tele-Fet';
+  src: url('assets/fonts/tele-groteskfet-webfont.eot');
+  src: url('assets/fonts/tele-groteskfet-webfont.eot?#iefix') format('embedded-opentype'),
+       url('assets/fonts/tele-groteskfet-webfont.woff') format('woff'),
+       url('assets/fonts/tele-groteskfet-webfont.ttf')  format('truetype'),
+       url('assets/fonts/tele-groteskfet-webfont.svg#svgFontName') format('svg');
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}

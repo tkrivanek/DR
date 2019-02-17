@@ -1,0 +1,70 @@
+// Sidebar
+.sidebar {
+    box-shadow: 5px 0 10px grey(500);
+
+    // Branding
+    .branding {
+        height: $header-height;
+        padding: $size;
+    }
+}
+
+////
+/// Main menu
+//
+.main-menu {
+    .menu-items {
+        text-align: center;
+        list-style-type: none;
+        padding: 0;
+        color: $white;
+
+        // Active menu item
+        .active {
+            a {
+                background-color: grey(100);
+                .menu-title {
+                    color: grey(600);
+                }
+            }
+        }
+        & > .menu-item {
+            a {
+                @include transition(background-color);
+                position: relative;
+                display: flex;
+                align-items: center;
+                padding: $size $size-30 / 2;
+                // border-bottom: 1px solid grey(200);
+                
+                
+                @include hover-focus {
+                    background-color: grey(100);
+                }
+                
+                // Custom title hover
+                &::after {
+                    @include transition(opacity);
+                    content: '\f105';
+                    font-family: $font-fa;
+                    position: absolute;
+                    left: 80%;
+                    padding: 5px 10px;
+                    font-size: 13px;
+                    color: grey(400);
+                    white-space: nowrap;
+                    z-index: 1000000;
+                } 
+            }
+        }
+
+        // Menu title
+        .menu-title {
+            @extend %text-overflow;
+            flex: 1;
+            color: grey(400);
+            font-size: 16px;
+            text-align: left;
+        }
+    }
+}

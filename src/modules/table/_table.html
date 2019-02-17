@@ -1,0 +1,241 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th class="add-new"><i class="icon fa fa-plus"></i></th>
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "Račun"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "column-sorted",
+                "th-heading": "Klijent"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "Adresa"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "OIB"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "PDV (25%)"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "Prije PDV"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "Ukupno (HRK)"
+            })
+            @@include('_table-thead.html', {
+                "th-class": "",
+                "th-heading": "Plaćeno"
+            })
+            <th class="column-actions dropdown">
+                <i class="dropdown-toggle icon fa fa-ellipsis-h"></i>
+                <ul class="dropdown-menu dropdown-menu--checkbox dropdown-menu--right">
+                    <li>
+                        <div class="form-group">
+                            <span class="form-checkbox">
+                                <input type="checkbox" id="checkbox1" checked>
+                                <label for="checkbox1"></label>
+                            </span>
+                            <label for="checkbox1">Label kolone</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <span class="form-checkbox">
+                                <input type="checkbox" id="checkbox2" checked>
+                                <label for="checkbox2"></label>
+                            </span>
+                            <label for="checkbox2">Label kolone malo duži</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <span class="form-checkbox">
+                                <input type="checkbox" id="checkbox3" checked>
+                                <label for="checkbox3"></label>
+                            </span>
+                            <label for="checkbox3">Label kolone ipak malo duži</label>
+                        </div>
+                    </li>
+                </ul>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>097-2-1</td>
+            <td class="column-sorted client-croatia-osiguranje">Croatia Osiguranje</td>
+            <td>Aleja Antuna Augustinčića 23</td>
+            <td>13456890238975</td>
+            <td>6.789,11</td>
+            <td>21.212,20</td>
+            <td class="price-total">27.567,31</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>097-2-1</td>
+            <td class="column-sorted client-croatia-osiguranje">Croatia Osiguranje</td>
+            <td>Aleja Antuna Augustinčića 23</td>
+            <td>13456890238975</td>
+            <td>6.789,11</td>
+            <td>21.212,20</td>
+            <td class="price-total">27.567,31</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>097-2-1</td>
+            <td class="column-sorted client-croatia-osiguranje">Croatia Osiguranje</td>
+            <td>Aleja Antuna Augustinčića 23</td>
+            <td>13456890238975</td>
+            <td>6.789,11</td>
+            <td>21.212,20</td>
+            <td class="price-total">27.567,31</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>027-6-1</td>
+            <td class="column-sorted">DŠJU - Državna škola za javnu upravu</td>
+            <td>Medulićeva ulica 36</td>
+            <td>34566544567987</td>
+            <td>7.329,32</td>
+            <td>41.637,91</td>
+            <td class="price-total">48.956,73</td>
+            <td>&nbsp;</td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>027-6-1</td>
+            <td class="column-sorted">DŠJU - Državna škola za javnu upravu</td>
+            <td>Medulićeva ulica 36</td>
+            <td>34566544567987</td>
+            <td>7.329,32</td>
+            <td>41.637,91</td>
+            <td class="price-total">48.956,73</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>027-6-1</td>
+            <td class="column-sorted">DŠJU - Državna škola za javnu upravu</td>
+            <td>Medulićeva ulica 36</td>
+            <td>34566544567987</td>
+            <td>7.329,32</td>
+            <td>41.637,91</td>
+            <td class="price-total">48.956,73</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>027-6-1</td>
+            <td class="column-sorted">DŠJU - Državna škola za javnu upravu</td>
+            <td>Medulićeva ulica 36</td>
+            <td>34566544567987</td>
+            <td>7.329,32</td>
+            <td>41.637,91</td>
+            <td class="price-total">48.956,73</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>123-1-1</td>
+            <td class="column-sorted">Fina - Financijska Agencija</td>
+            <td>Heinzelova ulica 123</td>
+            <td>8765432198765</td>
+            <td>30.604,00</td>
+            <td>90.307,00</td>
+            <td class="price-total">120.911,00</td>
+            <td>&nbsp;</td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>123-1-1</td>
+            <td class="column-sorted">Fina - Financijska Agencija</td>
+            <td>Heinzelova ulica 123</td>
+            <td>8765432198765</td>
+            <td>30.604,00</td>
+            <td>90.307,00</td>
+            <td class="price-total">120.911,00</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>123-1-1</td>
+            <td class="column-sorted">Fina - Financijska Agencija</td>
+            <td>Heinzelova ulica 123</td>
+            <td>8765432198765</td>
+            <td>30.604,00</td>
+            <td>90.307,00</td>
+            <td class="price-total">120.911,00</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>045-1-1</td>
+            <td class="column-sorted">Hrvatski Telekom</td>
+            <td>Ulica grada Vukovara 23</td>
+            <td>123456789009876</td>
+            <td>3.120,00</td>
+            <td>9.977,00</td>
+            <td class="price-total">13.097,00</td>
+            <td><i class="icon fa fa-check"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>045-1-1</td>
+            <td class="column-sorted">Hrvatski Telekom</td>
+            <td>Ulica grada Vukovara 23</td>
+            <td>123456789009876</td>
+            <td>3.120,00</td>
+            <td>9.977,00</td>
+            <td class="price-total">13.097,00</td>
+            <td>&nbsp;</td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>045-1-1</td>
+            <td class="column-sorted">Hrvatski Telekom</td>
+            <td>Ulica grada Vukovara 23</td>
+            <td>123456789009876</td>
+            <td>3.120,00</td>
+            <td>9.977,00</td>
+            <td class="price-total">13.097,00</td>
+            <td><i class="icon fa fa-clock-o"></i></td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+        <tr>
+            <td class="select"><i class="checkbox fa fa-square"></i></td>
+            <td>045-1-1</td>
+            <td class="column-sorted">Hrvatski Telekom</td>
+            <td>Ulica grada Vukovara 23</td>
+            <td>123456789009876</td>
+            <td>3.120,00</td>
+            <td>9.977,00</td>
+            <td class="price-total">13.097,00</td>
+            <td>&nbsp;</td>
+            <td class="row-actions"><i class="icon fa fa-ellipsis-h"></i></td>
+        </tr>
+    </tbody>
+</table>
