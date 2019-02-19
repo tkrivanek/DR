@@ -1,12 +1,10 @@
-package com.vvg.krivanek.warehouserental.service;
+package com.vvg.krivanek.warehouserental.dao.service;
 
 import java.util.List;
 
 import com.vvg.krivanek.warehouserental.domain.Warehouse;
 
-public interface WarehouseService {
-
-	void warehouseScheduler();
+public interface WarehouseDaoService {
 
 	List<Warehouse> getWarehouses();
 }
