@@ -6,5 +6,5 @@ import com.vvg.krivanek.warehouserental.domain.Warehouse;
 
 public interface WarehouseDaoService {
 
-	List<Warehouse> getWarehouses();
+	List<Warehouse> getWarehouses(String id);
 }

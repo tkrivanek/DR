@@ -23,8 +23,8 @@ public class WarehouseServiceProvider implements WarehouseService {
 	}
 
 	@Override
-	public List<Warehouse> getWarehouses() {
-		return warehouseDaoService.getWarehouses();
+	public List<Warehouse> getWarehouses(String id) {
+		return warehouseDaoService.getWarehouses(id);
 	}
 
 }

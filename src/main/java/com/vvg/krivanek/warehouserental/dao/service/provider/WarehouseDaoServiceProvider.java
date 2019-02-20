@@ -19,7 +19,7 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService{
 	JdbcTemplate jdbc;
 
 	@Override
-	public List<Warehouse> getWarehouses() {
+	public List<Warehouse> getWarehouses(String id) {
 		StringBuilder query = new StringBuilder("SELECT * FROM WAREHOUSE");
 		return jdbc.query(query.toString(), new WarehouseMapper());
 	}

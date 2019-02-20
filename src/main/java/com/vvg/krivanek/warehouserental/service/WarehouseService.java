@@ -8,5 +8,5 @@ public interface WarehouseService {
 
 	void warehouseScheduler();
 
-	List<Warehouse> getWarehouses();
+	List<Warehouse> getWarehouses(String id);
 }
