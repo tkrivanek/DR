@@ -5,22 +5,25 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.vvg.krivanek.warehouserental.dao.service.WarehouseDaoService;
 import com.vvg.krivanek.warehouserental.domain.Warehouse;
 
 @Repository
-public class WarehouseDaoServiceProvider implements WarehouseDaoService{
+public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 
 	@Autowired
-	JdbcTemplate jdbc;
+	NamedParameterJdbcTemplate jdbc;
 
 	@Override
 	public List<Warehouse> getWarehouses(String id) {
-		StringBuilder query = new StringBuilder("SELECT * FROM WAREHOUSE");
+		StringBuilder query = new StringBuilder(
+				"SELECT warehouse.*, warehouse_type.name, warehouse_status.name "
+				+ "FROM warehouse, warehouse_type, warehouse_status "
+				+ "WHERE warehouse.status_id=warehouse_status.id AND warehouse.type_id=warehouse_type.id");
 		return jdbc.query(query.toString(), new WarehouseMapper());
 	}
 
@@ -35,8 +38,8 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService{
 				warehouse.setDailyPrice(rs.getLong("DAILY_PRICE"));
 				warehouse.setFull(rs.getBoolean("FULL"));
 				warehouse.setName(rs.getString("NAME"));
-				warehouse.setStatusId(rs.getLong("STATUS_ID"));
-				warehouse.setTypeId(rs.getLong("TYPE_ID"));
+				warehouse.setStatus(rs.getString("warehouse_status.name"));
+				warehouse.setType(rs.getString("warehouse_type.name"));
 				warehouse.setVolume(rs.getLong("VOLUME"));
 			}
 			return warehouse;

@@ -7,10 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.vvg.krivanek.warehouserental.dao.service.WarehouseAuctionDaoService;
 
 @Repository
-public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoService{
+public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoService {
 
 	@Autowired
-	public JdbcTemplate jdbcTemplate;
-	
-	
+	JdbcTemplate jdbcTemplate;
+
 }
