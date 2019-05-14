@@ -17,8 +17,9 @@ public class WarehouseController {
 	UserWarehouseService userWarehouseService;
 
 	@GetMapping("/getWarehouses")
-	public String mainWithParam(@RequestParam(name = "id", required = false) String id, Model model) {
-		model.addAttribute("warehouses", warehouseService.getWarehouses(id));
+	public String mainWithParam(@RequestParam(name = "id", required = false) String id, 
+			@RequestParam(name = "notRented", required = false) boolean notRented, Model model) {
+		model.addAttribute("warehouses", warehouseService.getWarehouses(id, notRented));
 
 		return "welcome"; // view
 	}

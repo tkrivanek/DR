@@ -23,10 +23,10 @@ public class UserWarehouseDaoServiceProvider implements UserWarehouseDaoService 
 	@Override
 	public List<UserWarehouse> getUserWarehouses(Long userId) {
 		StringBuilder query = new StringBuilder(
-				"SELECT user_warehouse.date_from, user_warehouse.date_to, warehouse.id, warehouse.daily_price, warehouse.name, warehouse.address, warehouse.volume, warehouse_type.name "
-						+ "FROM user_warehouse, warehouse, warehouse_type "
-						+ "WHERE user_warehouse.warehouse_id = warehouse.id AND user_warehouse.user_id =:userId "
-						+ "AND warehouse.type_id = warehouse_type.id;");
+				"SELECT USER_WAREHOUSE.DATE_FROM, USER_WAREHOUSE.DATE_TO, WAREHOUSE.ID, WAREHOUSE.DAILY_PRICE, WAREHOUSE.NAME, WAREHOUSE.ADDRESS, WAREHOUSE.VOLUME, WAREHOUSE_TYPE.NAME "
+						+ "FROM USER_WAREHOUSE, WAREHOUSE, WAREHOUSE_TYPE "
+						+ "WHERE USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND USER_WAREHOUSE.USER_ID =:userId "
+						+ "AND WAREHOUSE.TYPE_ID = WAREHOUSE_TYPE.ID;");
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("userId", userId);
 
@@ -39,15 +39,15 @@ public class UserWarehouseDaoServiceProvider implements UserWarehouseDaoService 
 		public UserWarehouse mapRow(ResultSet rs, int rowNum) throws SQLException {
 			UserWarehouse userWarehouse = new UserWarehouse();
 			if (!rs.wasNull()) {
-				userWarehouse.setDateFrom(rs.getDate("date_from"));
-				userWarehouse.setDateTo(rs.getDate("date_to"));
+				userWarehouse.setDateFrom(rs.getDate("DATE_FROM"));
+				userWarehouse.setDateTo(rs.getDate("DATE_TO"));
 				Warehouse warehouse = new Warehouse();
-				warehouse.setId(rs.getLong("id"));
-				warehouse.setDailyPrice(rs.getLong("daily_price"));
-				warehouse.setName(rs.getString("name"));
-				warehouse.setAdress(rs.getString("address"));
-				warehouse.setVolume(rs.getLong("volume"));
-				warehouse.setType(rs.getString("warehouse_type.name"));
+				warehouse.setId(rs.getLong("ID"));
+				warehouse.setDailyPrice(rs.getLong("DAILY_PRICE"));
+				warehouse.setName(rs.getString("NAME"));
+				warehouse.setAdress(rs.getString("ADDRESS"));
+				warehouse.setVolume(rs.getLong("VOLUME"));
+				warehouse.setType(rs.getString("WAREHOUSE_TYPE.NAME"));
 				userWarehouse.setWarehouse(warehouse);
 			}
 			return userWarehouse;

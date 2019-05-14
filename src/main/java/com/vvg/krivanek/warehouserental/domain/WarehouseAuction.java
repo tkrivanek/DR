@@ -13,7 +13,7 @@ public class WarehouseAuction {
 	private Date endDate;
 	private String bidPrice;
 	private String endPrice;
-	private Long warehouseId;
-	private Long statusId;
-	private Long userId;
+	private Warehouse warehouse;
+	private String status;
+	private String username;
 }

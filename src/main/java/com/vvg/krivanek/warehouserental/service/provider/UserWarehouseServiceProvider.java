@@ -16,7 +16,7 @@ public class UserWarehouseServiceProvider implements UserWarehouseService {
 	UserWarehouseDaoService userWarehouseDaoService;
 
 	@Override
-	public List<UserWarehouse> getUserWarehouses(Long userId) {
+	public List<UserWarehouse> getUserWarehouses(Long userId, boolean notRented) {
 		return userWarehouseDaoService.getUserWarehouses(userId);
 
 	}

@@ -6,5 +6,5 @@ import com.vvg.krivanek.warehouserental.domain.UserWarehouse;
 
 public interface UserWarehouseService {
 
-	List<UserWarehouse> getUserWarehouses (Long userId);
+	List<UserWarehouse> getUserWarehouses (Long userId, boolean notRented);
  }

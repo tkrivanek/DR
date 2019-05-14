@@ -19,11 +19,14 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 	NamedParameterJdbcTemplate jdbc;
 
 	@Override
-	public List<Warehouse> getWarehouses(String id) {
+	public List<Warehouse> getWarehouses(String id, boolean notRented) {
 		StringBuilder query = new StringBuilder(
-				"SELECT warehouse.*, warehouse_type.name, warehouse_status.name "
-				+ "FROM warehouse, warehouse_type, warehouse_status "
-				+ "WHERE warehouse.status_id=warehouse_status.id AND warehouse.type_id=warehouse_type.id");
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.NAME, WAREHOUSE_STATUS.NAME "
+				+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS "
+				+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID");
+		if(notRented) {
+			query.append(" AND WAREHOUSE_STATUS.CODE='notRented'");
+		}
 		return jdbc.query(query.toString(), new WarehouseMapper());
 	}
 
@@ -38,8 +41,8 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 				warehouse.setDailyPrice(rs.getLong("DAILY_PRICE"));
 				warehouse.setFull(rs.getBoolean("FULL"));
 				warehouse.setName(rs.getString("NAME"));
-				warehouse.setStatus(rs.getString("warehouse_status.name"));
-				warehouse.setType(rs.getString("warehouse_type.name"));
+				warehouse.setStatus(rs.getString("WAREHOUSE_STATUS.NAME"));
+				warehouse.setType(rs.getString("WAREHOUSE_TYPE.NAME"));
 				warehouse.setVolume(rs.getLong("VOLUME"));
 			}
 			return warehouse;
