@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/header :: shared-header" />
+
+</head>
+<body>
+
+	<div th:replace="common/navbar :: navbar-group (userId=${user.id})" /></div>
+	<div class="container">
+		<!-- Page Content -->
+		<br>
+		<div th:if="${not #lists.isEmpty(warehouses)}" class="col-lg-9">
+			
+			<table class="table table-hover">
+				<tr>
+					<th>Vrsta</th>
+					<th>Ime</th>
+					<th>Volumen</th>
+					<th>Adresa</th>
+					<th>Dnevna cijena (HRK)</th>
+					<th><a class="btn btn-info btn-sm"
+							th:href="@{/createWarehouse}">
+							Dodaj skladište </a></th>
+				</tr>
+				<tr th:each="warehouse, iStat : ${warehouses}"
+					th:style="${iStat.odd}? 'font-weight: bold;'"
+					th:alt-title="${iStat.even}? 'even' : 'odd'">
+					<td th:text="${warehouse.warehouseTypeName}" />
+					<td th:text="${warehouse.name}" />
+					<td th:text="${warehouse.volume}" />
+					<td th:text="${warehouse.address}" />
+					<td th:text="${warehouse.dailyPrice}" />
+					<td>
+						<button type="button" class="btn btn-danger btn-sm"
+							data-toggle="modal" data-target="#confirmDeleteModal"
+							data-type="${warehouse.id}">Obriši</button>
+					</td>
+					<td>
+						<a class="btn btn-info btn-sm"
+							th:href="@{/findWarehouse(warehouseId=${warehouse.id})}">
+							Uredi </a>
+					</td>
+				</tr>
+			</table>
+			<hr />
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i : ${#numbers.sequence(0,warehouses.totalPages-1)}">
+					<a th:href="@{${#httpServletRequest.requestURI}(page=${i})}"
+						th:text="${i+1} " class="nav-link"
+						th:classappend="${currentPage}==${i}?'active' : ''"></a>
+			</ul>
+		</div>
+		<div th:if="${#lists.isEmpty(warehouses)}" class="col-lg-9">
+			Nema rezultata</div>
+
+		<div id="confirmDeleteModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form>
+						<div class="modal-header">
+							<h4 class="modal-title">Brisanje skladišta</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">
+							<p>Jeste sigurni da želite obrisati ovo skladište?</p>
+							<p class="text-warning">
+								<small>Ova akcija se ne može poništiti.</small>
+							</p>
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" data-dismiss="modal"
+								value="Otkaži">
+							<input type="submit" class="btn btn-danger" value="Potvrdi">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<div th:replace="common/footer :: bottom-script" /></div>
+</body>
+</html>

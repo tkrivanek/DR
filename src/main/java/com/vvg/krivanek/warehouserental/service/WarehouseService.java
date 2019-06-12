@@ -1,6 +1,7 @@
 package com.vvg.krivanek.warehouserental.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.vvg.krivanek.warehouserental.domain.Warehouse;
 
@@ -8,5 +9,13 @@ public interface WarehouseService {
 
 	void warehouseScheduler();
 
-	List<Warehouse> getWarehouses(String id, boolean notRented);
+	Page<Warehouse> getWarehouses(boolean notRented, boolean rented, boolean auction, Pageable pageable);
+
+	Warehouse getWarehouse(String warehouseId);
+
+	void saveWarehouse(Warehouse warehouse);
+
+	void updateWarehouse(Warehouse warehouse);
+	
+	void deleteWarehouse (String warehouseId);
 }

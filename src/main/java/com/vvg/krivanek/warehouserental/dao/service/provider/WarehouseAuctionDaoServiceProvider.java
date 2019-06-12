@@ -22,11 +22,11 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 	@Override
 	public List<WarehouseAuction> getWarehousesOnAuction() {
 		StringBuilder query = new StringBuilder(
-				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.NAME, WAREHOUSE_STATUS.NAME, WAREHOUSE_AUCTION.*, WAREHOUSE_AUCTION_STATUS.NAME, USER.USERNAME "
-				+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, WAREHOUSE_AUCTION, WAREHOUSE_AUCTION_STATUS, USER "
-				+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID "
-				+ "AND WAREHOUSE_AUCTION.WAREHOUSE_ID= WAREHOUSE.ID AND WAREHOUSE_AUCTION.STATUS_ID=WAREHOUSE_AUCTION_STATUS.ID "
-				+ "AND WAREHOUSE_AUCTION.USER_ID=USER.ID");
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE,  WAREHOUSE_STATUS.ID, WAREHOUSE_STATUS.NAME, WAREHOUSE_STATUS.CODE, WAREHOUSE_AUCTION.*, WAREHOUSE_AUCTION_STATUS.NAME, USER.USERNAME "
+						+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, WAREHOUSE_AUCTION, WAREHOUSE_AUCTION_STATUS, USER "
+						+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID "
+						+ "AND WAREHOUSE_AUCTION.WAREHOUSE_ID= WAREHOUSE.ID AND WAREHOUSE_AUCTION.STATUS_ID=WAREHOUSE_AUCTION_STATUS.ID "
+						+ "AND WAREHOUSE_AUCTION.USER_ID=USER.ID AND WAREHOUSE.ACTIVE");
 
 		return jdbcTemplate.query(query.toString(), new WarehouseAuctionMapper());
 	}
@@ -46,15 +46,29 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 				warehouseAuction.setEndPrice(rs.getString("WAREHOUSE_AUCTION.END_PRICE"));
 				warehouseAuction.setBidPrice(rs.getString("WAREHOUSE_AUCTION.BID_PRICE"));
 				warehouseAuction.setUsername(rs.getString("USER.USERNAME"));
-				
+
 				warehouse.setId(rs.getLong("WAREHOUSE.ID"));
-				warehouse.setAdress(rs.getString("WAREHOUSE.ADDRESS"));
+				warehouse.setAddress(rs.getString("WAREHOUSE.ADDRESS"));
 				warehouse.setAuctionStartPrice(rs.getString("WAREHOUSE.AUCTION_START_PRICE"));
 				warehouse.setDailyPrice(rs.getLong("WAREHOUSE.DAILY_PRICE"));
 				warehouse.setFull(rs.getBoolean("WAREHOUSE.FULL"));
 				warehouse.setName(rs.getString("WAREHOUSE.NAME"));
-				warehouse.setStatus(rs.getString("WAREHOUSE_STATUS.NAME"));
-				warehouse.setType(rs.getString("WAREHOUSE_TYPE.NAME"));
+
+//				WarehouseStatus warehouseStatus = new WarehouseStatus();
+//				warehouseStatus.setId(rs.getString("WAREHOUSE_STATUS.ID"));
+//				warehouseStatus.setName(rs.getString("WAREHOUSE_STATUS.NAME"));
+//				warehouseStatus.setCode(rs.getString("WAREHOUSE_STATUS.CODE"));
+//				warehouse.setWarehouseStatus(warehouseStatus);
+				warehouse.setWarehouseStatusId(rs.getString("WAREHOUSE_STATUS.ID"));
+				warehouse.setWarehouseStatusName(rs.getString("WAREHOUSE_STATUS.NAME"));
+//				WarehouseType warehouseType = new WarehouseType();
+//				warehouseType.setId(rs.getString("WAREHOUSE_TYPE.ID"));
+//				warehouseType.setName(rs.getString("WAREHOUSE_TYPE.NAME"));
+//				warehouseType.setCode(rs.getString("WAREHOUSE_TYPE.CODE"));
+//				warehouse.setWarehouseType(warehouseType);
+				warehouse.setWarehouseTypeId(rs.getString("WAREHOUSE_TYPE.ID"));
+				warehouse.setWarehouseTypeName(rs.getString("WAREHOUSE_TYPE.NAME"));
+				
 				warehouse.setVolume(rs.getLong("WAREHOUSE.VOLUME"));
 				warehouseAuction.setWarehouse(warehouse);
 			}

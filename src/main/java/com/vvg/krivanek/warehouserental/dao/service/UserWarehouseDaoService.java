@@ -1,10 +1,11 @@
 package com.vvg.krivanek.warehouserental.dao.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.vvg.krivanek.warehouserental.domain.UserWarehouse;
 
 public interface UserWarehouseDaoService {
 
-	List<UserWarehouse> getUserWarehouses(Long userId);
+	Page<UserWarehouse> getUserWarehouses(Long userId, Pageable pageable);
 }

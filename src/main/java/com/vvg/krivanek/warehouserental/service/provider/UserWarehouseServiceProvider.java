@@ -1,8 +1,8 @@
 package com.vvg.krivanek.warehouserental.service.provider;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.vvg.krivanek.warehouserental.dao.service.UserWarehouseDaoService;
@@ -16,8 +16,8 @@ public class UserWarehouseServiceProvider implements UserWarehouseService {
 	UserWarehouseDaoService userWarehouseDaoService;
 
 	@Override
-	public List<UserWarehouse> getUserWarehouses(Long userId, boolean notRented) {
-		return userWarehouseDaoService.getUserWarehouses(userId);
+	public Page<UserWarehouse> getUserWarehouses(Long userId, Pageable pageable) {
+		return userWarehouseDaoService.getUserWarehouses(userId, pageable);
 
 	}
 

@@ -14,8 +14,7 @@ public class WarehouseRentalApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WarehouseRentalApplication.class, args);
-//		 String encoded=new BCryptPasswordEncoder().encode("joyle");
-//	        System.out.println(encoded);
+		
 	}
 
 }

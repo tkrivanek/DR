@@ -1,10 +1,11 @@
 package com.vvg.krivanek.warehouserental.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.vvg.krivanek.warehouserental.domain.UserWarehouse;
 
 public interface UserWarehouseService {
 
-	List<UserWarehouse> getUserWarehouses (Long userId, boolean notRented);
+	Page<UserWarehouse> getUserWarehouses (Long userId, Pageable pageable);
  }

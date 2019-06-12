@@ -1,8 +1,8 @@
 package com.vvg.krivanek.warehouserental.service.provider;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,31 @@ public class WarehouseServiceProvider implements WarehouseService {
 	}
 
 	@Override
-	public List<Warehouse> getWarehouses(String id, boolean notRented) {
-		return warehouseDaoService.getWarehouses(id, notRented);
+	public  Page<Warehouse> getWarehouses( boolean notRented, boolean rented, boolean auction, Pageable pageable ) {
+		return warehouseDaoService.getPagedWarehouses(notRented, rented, auction, pageable);
+		
+	}
+
+	@Override
+	public Warehouse getWarehouse(String warehouseId) {
+		return warehouseDaoService.getWarehouseById(warehouseId);
+	}
+
+	@Override
+	public void saveWarehouse(Warehouse warehouse) {
+		warehouseDaoService.saveWarehouse(warehouse);
+		
+	}
+
+	@Override
+	public void updateWarehouse(Warehouse warehouse) {
+		warehouseDaoService.updateWarehouse(warehouse);
+		
+	}
+
+	@Override
+	public void deleteWarehouse(String warehouseId) {
+		warehouseDaoService.deleteWarehouse(warehouseId);
 		
 	}
 
