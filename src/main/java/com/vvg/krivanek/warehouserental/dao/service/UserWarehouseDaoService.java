@@ -8,4 +8,8 @@ import com.vvg.krivanek.warehouserental.domain.UserWarehouse;
 public interface UserWarehouseDaoService {
 
 	Page<UserWarehouse> getUserWarehouses(Long userId, Pageable pageable);
+	
+	void saveWarehouseRent (UserWarehouse userWarehouse);
+	
+	void cancelWarehouseRent (String userId, String warehouseId);
 }

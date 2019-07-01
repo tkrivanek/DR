@@ -27,24 +27,26 @@ public class UserWarehouseDaoServiceProvider implements UserWarehouseDaoService 
 	@Autowired
 	JdbcTemplate template;
 
+	@Autowired
+	NamedParameterJdbcTemplate jdbc;
+
 	@Override
 	public Page<UserWarehouse> getUserWarehouses(Long userId, Pageable pageable) {
 		StringBuilder countQuery = new StringBuilder(
 				"SELECT count(1) AS row_count FROM USER_WAREHOUSE, WAREHOUSE, WAREHOUSE_TYPE "
 						+ "WHERE USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND USER_WAREHOUSE.USER_ID =:userId "
-						+ "AND WAREHOUSE.TYPE_ID = WAREHOUSE_TYPE.ID AND WAREHOUSE.ACTIVE");
+						+ "AND WAREHOUSE.TYPE_ID = WAREHOUSE_TYPE.ID AND WAREHOUSE.ACTIVE AND USER_WAREHOUSE.ACTIVE");
 
 		StringBuilder query = new StringBuilder(
 				"SELECT USER_WAREHOUSE.DATE_FROM, USER_WAREHOUSE.DATE_TO, WAREHOUSE.ID, WAREHOUSE.DAILY_PRICE, WAREHOUSE.NAME, WAREHOUSE.ADDRESS, WAREHOUSE.VOLUME, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE "
 						+ " FROM USER_WAREHOUSE, WAREHOUSE, WAREHOUSE_TYPE "
 						+ " WHERE USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND USER_WAREHOUSE.USER_ID =:userId "
-						+ " AND WAREHOUSE.TYPE_ID = WAREHOUSE_TYPE.ID AND WAREHOUSE.ACTIVE");
+						+ " AND WAREHOUSE.TYPE_ID = WAREHOUSE_TYPE.ID AND WAREHOUSE.ACTIVE AND USER_WAREHOUSE.ACTIVE");
 		query.append(" LIMIT " + pageable.getPageSize() + " " + "OFFSET " + pageable.getOffset());
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("userId", userId);
 
 		int totalCount = jdbcTemplate.queryForObject(countQuery.toString(), parameters, Integer.class);
-//		(countQuery.toString(), parameters, new UserWarehousesCountMapper());
 
 		List<UserWarehouse> warehouses = jdbcTemplate.query(query.toString(), parameters, new UserWarehousesMapper());
 		return new PageImpl<>(warehouses, pageable, totalCount);
@@ -66,11 +68,6 @@ public class UserWarehouseDaoServiceProvider implements UserWarehouseDaoService 
 				warehouse.setAddress(rs.getString("ADDRESS"));
 				warehouse.setVolume(rs.getLong("VOLUME"));
 
-//				WarehouseType warehouseType = new WarehouseType();
-//				warehouseType.setId(rs.getString("WAREHOUSE_TYPE.ID"));
-//				warehouseType.setName(rs.getString("WAREHOUSE_TYPE.NAME"));
-//				warehouseType.setCode(rs.getString("WAREHOUSE_TYPE.CODE"));
-//				warehouse.setWarehouseType(warehouseType);
 				warehouse.setWarehouseTypeId(rs.getString("WAREHOUSE_TYPE.ID"));
 				warehouse.setWarehouseTypeName(rs.getString("WAREHOUSE_TYPE.NAME"));
 				userWarehouse.setWarehouse(warehouse);
@@ -78,12 +75,40 @@ public class UserWarehouseDaoServiceProvider implements UserWarehouseDaoService 
 			return userWarehouse;
 		}
 	}
+
 	class UserWarehousesCountMapper implements RowMapper<Integer> {
 
 		@Override
 		public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return rs.getInt("ROW_COUNT");
 		}
-		
 	}
+
+	@Override
+	public void saveWarehouseRent(UserWarehouse userWarehouse) {
+		StringBuilder query = new StringBuilder(
+				"INSERT INTO warehouse_db.user_warehouse (user_id, warehouse_id, date_from, date_to, active) VALUES (:userId, :warehouseId, :dateFrom, :dateTo, :active)");
+
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("userId", Long.valueOf(userWarehouse.getUserId()));
+		parameters.addValue("warehouseId", Long.valueOf(userWarehouse.getWarehouseId()));
+		parameters.addValue("dateFrom", userWarehouse.getDateFrom());
+		parameters.addValue("dateTo", userWarehouse.getDateTo());
+		parameters.addValue("active", Boolean.TRUE);
+		
+		jdbc.update(query.toString(), parameters);
+
+	}
+
+	@Override
+	public void cancelWarehouseRent(String userId, String warehouseId) {
+		StringBuilder query = new StringBuilder(
+				"UPDATE warehouse_db.user_warehouse SET USER_WAREHOUSE.ACTIVE = 0 WHERE USER_WAREHOUSE.USER_ID = :userId AND USER_WAREHOUSE.WAREHOUSE_ID = :warehouseId");		
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("userId", Long.valueOf(userId));
+		parameters.addValue("warehouseId", Long.valueOf(warehouseId));
+		
+		jdbc.update(query.toString(), parameters);
+	}
+
 }

@@ -21,4 +21,16 @@ public class UserWarehouseServiceProvider implements UserWarehouseService {
 
 	}
 
+	@Override
+	public void saveWarehouseRent(UserWarehouse userWarehouse) {
+		userWarehouseDaoService.saveWarehouseRent(userWarehouse);
+		
+	}
+
+	@Override
+	public void cancelWarehouseRent(String userId, String warehouseId) {
+		userWarehouseDaoService.cancelWarehouseRent(userId, warehouseId);
+		
+	}
+
 }

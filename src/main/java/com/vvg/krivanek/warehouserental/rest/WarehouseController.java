@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,19 +45,6 @@ public class WarehouseController {
 		return "warehouses"; // view
 	}
 
-	@GetMapping("/getUserWarehouses")
-	public String getUserWarehouses(@RequestParam(name = "userId", required = false) String userId,
-			@RequestParam(name = "notRented", required = false) boolean notRented,
-			@RequestParam(name = "page", required = false, defaultValue = "0") int page, Model model) {
-		model.addAttribute("warehouses",
-				userWarehouseService.getUserWarehouses(Long.valueOf(userId), PageRequest.of(page, 6)));
-		if (SecurityContextHolder.getContext().getAuthentication() != null) {
-			model.addAttribute("user",
-					userDaoService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-		}
-		return "warehouses"; // view
-	}
-
 	@PostMapping("/saveWarehouse")
 	public String saveWarehouse(Warehouse warehouse) {
 		warehouseService.saveWarehouse(warehouse);
@@ -69,7 +57,7 @@ public class WarehouseController {
 		return "redirect:/getWarehouses";
 	}
 
-	@PostMapping("/deleteWarehouse")
+	@DeleteMapping("/deleteWarehouse")
 	public String deleteWarehouse(@RequestParam(name = "warehouseId", required = true) String warehouseId) {
 		warehouseService.deleteWarehouse(warehouseId);
 		return "redirect:/getWarehouses";
@@ -85,7 +73,6 @@ public class WarehouseController {
 
 	@GetMapping("/createWarehouse")
 	public String createWarehouse(Model model, Warehouse warehouse) {
-
 		model.addAttribute("warehouseTypes", warehouseTypeService.getWarehouseTypes());
 		model.addAttribute("warehouseStatuses", warehouseStatusService.getWarehouseStatuses());
 		return "createWarehouse";

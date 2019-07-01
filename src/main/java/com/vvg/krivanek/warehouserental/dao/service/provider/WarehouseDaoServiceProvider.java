@@ -52,7 +52,7 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 //				warehouse.setWarehouseType(warehouseType);
 				warehouse.setWarehouseTypeId(rs.getString("WAREHOUSE_TYPE.ID"));
 				warehouse.setWarehouseTypeName(rs.getString("WAREHOUSE_TYPE.NAME"));
-				
+
 				warehouse.setVolume(rs.getLong("VOLUME"));
 			}
 			return warehouse;
@@ -110,8 +110,6 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("dailyPrice", warehouse.getDailyPrice());
-//		parameters.addValue("typeId", warehouse.getWarehouseType().getId());
-//		parameters.addValue("statusId", warehouse.getWarehouseStatus().getId());
 		parameters.addValue("typeId", warehouse.getWarehouseTypeId());
 		parameters.addValue("statusId", warehouse.getWarehouseStatusId());
 		parameters.addValue("full", warehouse.getFull());
@@ -127,14 +125,12 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 	@Override
 	public void updateWarehouse(Warehouse warehouse) {
 		StringBuilder query = new StringBuilder(
-				"UPDATE WAREHOUSE SET DAILY_PRICE = :dailyPrice, TYPE_ID = :typeId, STATUS_ID = :statusId, FULL = :full, NAME = :name, VOLUME = :volume, AUCTION_START_PRICE = :auctionStartPrice, ADDRESS = :address, ACTIVE = :active\r\n" + 
-				"WHERE id = :id");
-		
+				"UPDATE WAREHOUSE SET DAILY_PRICE = :dailyPrice, TYPE_ID = :typeId, STATUS_ID = :statusId, FULL = :full, NAME = :name, VOLUME = :volume, AUCTION_START_PRICE = :auctionStartPrice, ADDRESS = :address, ACTIVE = :active\r\n"
+						+ "WHERE id = :id");
+
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", warehouse.getId());
 		parameters.addValue("dailyPrice", warehouse.getDailyPrice());
-//		parameters.addValue("typeId", warehouse.getWarehouseType().getId());
-//		parameters.addValue("statusId", warehouse.getWarehouseStatus().getId());
 		parameters.addValue("typeId", warehouse.getWarehouseTypeId());
 		parameters.addValue("statusId", warehouse.getWarehouseStatusId());
 		parameters.addValue("full", warehouse.getFull());
@@ -146,14 +142,15 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 
 		jdbc.update(query.toString(), parameters);
 	}
-	
-	
+
 	@Override
 	public void deleteWarehouse(String warehouseId) {
-		// TODO Auto-generated method stub
-		
-	}
+		StringBuilder query = new StringBuilder("UPDATE WAREHOUSE SET ACTIVE = 0 WHERE id = :id");
 
-	
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", warehouseId);
+
+		jdbc.update(query.toString(), parameters);
+	}
 
 }

@@ -11,8 +11,9 @@
 	<div class="container">
 		<!-- Page Content -->
 		<br>
-		<div th:if="${not #lists.isEmpty(warehouses)}" class="col-lg-9">
-			
+		<div th:if="${not #lists.isEmpty(warehouses.content)}"
+			class="col-lg-9 addPadding">
+
 			<table class="table table-hover">
 				<tr>
 					<th>Vrsta</th>
@@ -20,9 +21,10 @@
 					<th>Volumen</th>
 					<th>Adresa</th>
 					<th>Dnevna cijena (HRK)</th>
-					<th><a class="btn btn-info btn-sm"
-							th:href="@{/createWarehouse}">
-							Dodaj skladište </a></th>
+					<th>
+						<a class="btn btn-info btn-sm" th:href="@{/createWarehouse}">
+							Dodaj skladište </a>
+					</th>
 				</tr>
 				<tr th:each="warehouse, iStat : ${warehouses}"
 					th:style="${iStat.odd}? 'font-weight: bold;'"
@@ -33,14 +35,18 @@
 					<td th:text="${warehouse.address}" />
 					<td th:text="${warehouse.dailyPrice}" />
 					<td>
-						<button type="button" class="btn btn-danger btn-sm"
-							data-toggle="modal" data-target="#confirmDeleteModal"
-							data-type="${warehouse.id}">Obriši</button>
+						<button type="button" class="btn btn-danger btn-sm" th:data-warehouse-id="${warehouse.id}"
+							data-toggle="modal" data-target="#confirmDeleteModal">Obriši</button>
 					</td>
 					<td>
 						<a class="btn btn-info btn-sm"
 							th:href="@{/findWarehouse(warehouseId=${warehouse.id})}">
 							Uredi </a>
+					</td>
+					<td>
+						<a class="btn btn-info btn-sm"
+							th:href="@{/rentWarehouse(warehouseIds=${warehouse.id})}">
+							Unajmi</a>
 					</td>
 				</tr>
 			</table>
@@ -53,23 +59,25 @@
 						th:classappend="${currentPage}==${i}?'active' : ''"></a>
 			</ul>
 		</div>
-		<div th:if="${#lists.isEmpty(warehouses)}" class="col-lg-9">
-			Nema rezultata</div>
+		<div th:if="${#lists.isEmpty(warehouses.content)}"
+			class="col-lg-9 addPadding">
+			<p class="addPadding">Nema rezultata</p>
+		</div>
 
 		<div id="confirmDeleteModal" class="modal fade">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<form>
+					<form id="deleteWarehouseForm" th:action="@{/deleteWarehouse}"
+						th:method="DELETE">
 						<div class="modal-header">
-							<h4 class="modal-title">Brisanje skladišta</h4>
+							<h4 class="modal-title" id="modalTitle">Brisanje skladišta</h4>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">&times;</button>
 						</div>
 						<div class="modal-body">
-							<p>Jeste sigurni da želite obrisati ovo skladište?</p>
-							<p class="text-warning">
-								<small>Ova akcija se ne može poništiti.</small>
-							</p>
+							<p th:text="'Jeste sigurni da želite obrisati ovo skladište?'"></p>
+							<input type="hidden" id="warehouseId" th:id="warehouseId"
+							th:name="warehouseId" />
 						</div>
 						<div class="modal-footer">
 							<input type="button" class="btn btn-default" data-dismiss="modal"
@@ -80,8 +88,13 @@
 				</div>
 			</div>
 		</div>
+
+
 	</div>
 	<!-- /container -->
-	<div th:replace="common/footer :: bottom-script" /></div>
+	<div th:replace="common/footer :: bottom-script" ></div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
 </body>
 </html>

@@ -15,8 +15,6 @@ public class Warehouse implements Serializable{
 	private Long volume;
 	private Boolean full;
 	private String auctionStartPrice;
-//	private WarehouseStatus warehouseStatus;
-//	private WarehouseType warehouseType;
 	private String warehouseTypeId;
 	private String warehouseStatusId;
 	private String warehouseTypeName;
