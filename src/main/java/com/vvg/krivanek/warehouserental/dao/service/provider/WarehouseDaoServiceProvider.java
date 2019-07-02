@@ -60,7 +60,7 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 	}
 
 	@Override
-	public Page<Warehouse> getPagedWarehouses(boolean notRented, boolean rented, boolean auction, Pageable pageable) {
+	public Page<Warehouse> getPagedWarehouses(boolean notRented, boolean auction, Pageable pageable) {
 		StringBuilder countQuery = new StringBuilder(
 				"SELECT count(1) AS row_count FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS "
 						+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID AND WAREHOUSE.ACTIVE");
@@ -72,10 +72,6 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 		if (notRented) {
 			countQuery.append(" AND WAREHOUSE_STATUS.CODE='notRented'");
 			queryForList.append(" AND WAREHOUSE_STATUS.CODE='notRented'");
-		}
-		if (rented) {
-			countQuery.append(" AND WAREHOUSE_STATUS.CODE='rented'");
-			queryForList.append(" AND WAREHOUSE_STATUS.CODE='rented'");
 		}
 		if (auction) {
 			countQuery.append(" AND WAREHOUSE_STATUS.CODE='auction'");

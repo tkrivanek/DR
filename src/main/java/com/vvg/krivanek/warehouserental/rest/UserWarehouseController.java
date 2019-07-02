@@ -48,6 +48,17 @@ public class UserWarehouseController {
 		}
 		return "userWarehouses"; // view
 	}
+	
+	@GetMapping("/getAllUserWarehouses")
+	public String getAllUserWarehouses(	@RequestParam(name = "page", required = false, defaultValue = "0") int page, Model model) {
+		model.addAttribute("userWarehouses",
+				userWarehouseService.getAllUserWarehouses(PageRequest.of(page, 6)));
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			model.addAttribute("user",
+					userDaoService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		}
+		return "rentedWarehouses"; // view
+	}
 
 	@PostMapping("/saveWarehouseRent")
 	public String saveWarehouseRent(UserWarehouse userWarehouse) {

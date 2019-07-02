@@ -12,4 +12,6 @@ public interface UserWarehouseDaoService {
 	void saveWarehouseRent (UserWarehouse userWarehouse);
 	
 	void cancelWarehouseRent (String userId, String warehouseId);
+	
+	Page<UserWarehouse> getAllUserWarehouses(Pageable pageable);
 }

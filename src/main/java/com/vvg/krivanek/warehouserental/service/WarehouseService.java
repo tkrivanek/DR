@@ -9,7 +9,7 @@ public interface WarehouseService {
 
 	void warehouseScheduler();
 
-	Page<Warehouse> getWarehouses(boolean notRented, boolean rented, boolean auction, Pageable pageable);
+	Page<Warehouse> getWarehouses(boolean notRented, boolean auction, Pageable pageable);
 
 	Warehouse getWarehouse(String warehouseId);
 

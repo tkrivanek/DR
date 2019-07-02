@@ -26,8 +26,8 @@ public class WarehouseServiceProvider implements WarehouseService {
 	}
 
 	@Override
-	public  Page<Warehouse> getWarehouses( boolean notRented, boolean rented, boolean auction, Pageable pageable ) {
-		return warehouseDaoService.getPagedWarehouses(notRented, rented, auction, pageable);
+	public  Page<Warehouse> getWarehouses( boolean notRented, boolean auction, Pageable pageable ) {
+		return warehouseDaoService.getPagedWarehouses(notRented, auction, pageable);
 		
 	}
 
@@ -39,7 +39,6 @@ public class WarehouseServiceProvider implements WarehouseService {
 	@Override
 	public void saveWarehouse(Warehouse warehouse) {
 		warehouseDaoService.saveWarehouse(warehouse);
-		
 	}
 
 	@Override

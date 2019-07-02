@@ -7,7 +7,7 @@ import com.vvg.krivanek.warehouserental.domain.Warehouse;
 
 public interface WarehouseDaoService {
 
-	Page<Warehouse> getPagedWarehouses(boolean notRented, boolean rented, boolean auction, Pageable pageable);
+	Page<Warehouse> getPagedWarehouses(boolean notRented, boolean auction, Pageable pageable);
 
 	Warehouse getWarehouseById(String warehouseId);
 

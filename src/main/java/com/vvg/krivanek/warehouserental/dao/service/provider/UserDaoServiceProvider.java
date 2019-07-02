@@ -48,4 +48,15 @@ public class UserDaoServiceProvider implements UserDaoService {
 		}
 
 	}
+
+	@Override
+	public User getUserById(String userId) {
+		String query = "SELECT USER.id, USER.name, USER.surname, USER.email, USER.phone, USER.username, USER.address, ROLE.code "
+				+ "FROM warehouse_db.user USER, warehouse_db.user_role ROLE WHERE USER.username = ROLE.username AND USER.id = :userId";
+
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("userId", userId);
+
+		return jdbcTemplate.queryForObject(query.toString(), parameters, new UserMapper());
+	}
 }

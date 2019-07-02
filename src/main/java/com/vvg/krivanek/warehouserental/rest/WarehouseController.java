@@ -32,15 +32,14 @@ public class WarehouseController {
 
 	@GetMapping("/getWarehouses")
 	public String getWarehouses(@RequestParam(name = "notRented", required = false) boolean notRented,
-			@RequestParam(name = "rented", required = false) boolean rented,
 			@RequestParam(name = "auction", required = false) boolean auction,
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page, Model model) {
-		model.addAttribute("warehouses",
-				warehouseService.getWarehouses(notRented, rented, auction, PageRequest.of(page, 6)));
+		model.addAttribute("warehouses", warehouseService.getWarehouses(notRented, auction, PageRequest.of(page, 6)));
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			model.addAttribute("user",
 					userDaoService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		}
+		model.addAttribute("notRented", notRented);
 		model.addAttribute("currentPage", page);
 		return "warehouses"; // view
 	}
