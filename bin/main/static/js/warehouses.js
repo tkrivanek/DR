@@ -1,43 +1,72 @@
 //setting disabled on endDate field
-$( document ).ready(function() {
+$(document).ready(function() {
 	document.getElementById("endDate").disabled = true;
 });
 
-//datepicker for fromDate input
+// datepicker for fromDate input
 $("#fromDate").datepicker({
 	format : "dd/mm/yyyy",
 	language : "hr",
 	todayHighlight : true,
 	startDate : "today",
-	autoclose: true
+	autoclose : true
 });
 
-//datepicker for endDate input
+// datepicker for endDate input
 $("#endDate").datepicker({
 	format : "dd/mm/yyyy",
 	language : "hr",
 	todayHighlight : true,
 	startDate : "today",
-	autoclose: true
+	autoclose : true
 });
 
-//setting disabled true or false on dependent fields
-$('#fromDate').on('change', function() {
-	if(document.getElementById("fromDate").value !== ''){
+function checkDates() {
+	var date1 = $('#fromDate').datepicker('getDate');
+	var date2 = $('#endDate').datepicker('getDate');
+	if (date1 && date2) {
+		var time1 = date1.getTime();
+		var time2 = date2.getTime();
+		if (time1 >= time2) {
+			$('#notification').removeClass('d-none');
+			$('#div').removeClass('d-none');
+			$("#div").fadeTo(5000, 500).slideUp(500, function() {
+				$("#div").slideUp(500);
+				$("#div").addClass('d-none');
+			});
+			$("#endDate").datepicker("hide");
+			$("#fromDate").datepicker("hide");
+			$('#fromDate').datepicker('clearDates');
+			$('#numberOfDays').val('0');
+			$('#price').val('0 HRK');
+			return false;
+		} else {
+			return true;
+		}
+	}
+};
+// setting disabled true or false on dependent fields
+$('#fromDate').on('changeDate', function() {
+	if (document.getElementById("fromDate").value !== '') {
 		document.getElementById("endDate").disabled = false;
-	}else {
+	} else {
 		document.getElementById("endDate").disabled = true;
 		document.getElementById("endDate").value = "";
-		document.getElementById("calculated").value = "";
+	}
+	if (document.getElementById("endDate").value !== '') {
+		checkDates();
+	}
+
+});
+
+// calling fuction on change of endDate input
+$('#endDate').on('change', function() {
+	if (checkDates()) {
+		calcDiff();
 	}
 });
 
-//calling fuction on change of endDate input
-$('#endDate').on('change', function() {
-	calcDiff();
-});
-
-//calculating days between dates and total price of rent
+// calculating days between dates and total price of rent
 function calcDiff() {
 	var date1 = $('#fromDate').datepicker('getDate');
 	var date2 = $('#endDate').datepicker('getDate');
@@ -46,7 +75,7 @@ function calcDiff() {
 	var totPrice = 0;
 	if (date1 && date2) {
 		diff = Math.floor((date2.getTime() - date1.getTime()) / 86400000);
-		if(price){
+		if (price) {
 			totPrice = price * diff;
 		}
 	}
@@ -54,20 +83,25 @@ function calcDiff() {
 	$('#price').val(totPrice + ' HRK');
 }
 
-//setting warehouse attributes for canceling rent 
+// setting warehouse attributes for canceling rent
 $('#confirmCancelRentModal').on('show.bs.modal', function(event) {
 	var button = $(event.relatedTarget) // Button that triggered the modal
-	var warehouseId = button.data('warehouse-id') // Extract info from data-* attributes
+	var warehouseId = button.data('warehouse-id') // Extract info from data-*
+	// attributes
 	var userId = button.data('user-id') // Extract info from data-* attributes
 	$('#warehouseId').val(warehouseId)
 	$('#userId').val(userId)
 
-})
+});
 
 $('#confirmDeleteModal').on('show.bs.modal', function(event) {
 	var button = $(event.relatedTarget) // Button that triggered the modal
-	var warehouseId = button.data('warehouse-id') // Extract info from data-* attributes
+	var warehouseId = button.data('warehouse-id') // Extract info from data-*
+	// attributes
 	$('#warehouseId').val(warehouseId)
 
-})
+});
 
+$('#closeAlert').on('click', function(event) {
+	$("#div").addClass('d-none');
+});

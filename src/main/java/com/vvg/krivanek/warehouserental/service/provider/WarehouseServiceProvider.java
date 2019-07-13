@@ -53,4 +53,12 @@ public class WarehouseServiceProvider implements WarehouseService {
 		
 	}
 
+	@Override
+	public Page<Warehouse> getControllReadyWarehouses(Pageable pageable) {
+		return warehouseDaoService.getControllReadyWarehouses(pageable);
+	}
+	
+	
+	
+
 }

@@ -12,9 +12,9 @@ public class UserWarehouse implements Serializable{
 
 	private static final long serialVersionUID = 4220829512901618399L;
 	private Long id;
-	@DateTimeFormat(pattern = "mm/dd/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateFrom;
-	@DateTimeFormat(pattern = "mm/dd/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dateTo;
 	private Warehouse warehouse;
 	private User user;

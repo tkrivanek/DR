@@ -1,5 +1,7 @@
 package com.vvg.krivanek.warehouserental.dao.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -16,4 +18,8 @@ public interface WarehouseDaoService {
 	void updateWarehouse (Warehouse warehouse);
 	
 	void deleteWarehouse(String warehouseId);
+	
+	List<Warehouse> getRentFinishedWarehouses();
+	
+	Page<Warehouse> getControllReadyWarehouses(Pageable pageable);
 }

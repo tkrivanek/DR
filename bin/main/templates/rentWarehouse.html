@@ -38,13 +38,20 @@
 				<p th:text="'Odaberite od kada do kada želite unajmiti skladište'"></p>
 
 				<label for="fromDate">Datum od</label>
-				<input type="text" class="input-sm form-control" name="start" id="fromDate" th:field="*{dateFrom}"/>
+				<input type="text" class="input-sm form-control" name="start" id="fromDate" th:field="*{dateFrom}" autocomplete="off"/>
 			
 				<label for="endDate">Datum do</label>
-				<input type="text" class="input-sm form-control" name="end"	id="endDate" th:field="*{dateTo}"/>
+				<input type="text" class="input-sm form-control" name="end"	id="endDate" th:field="*{dateTo}" autocomplete="off"/>
+				
+  				<div id="div"class="alert alert-warning alert-dismissible fade show d-none">
+   					 <a href="#" class="close"  aria-label="close" id="closeAlert">&times;</a> 
+    				Odaberite ispravne datume!! Datum od ne smije biti veći od datuma do.
+    			<br>
+ 				 </div>
 
 				<label for="numberOfDays">Broj dana</label>
 				<input type="text" id="numberOfDays" readonly="readonly" class="form-control-plaintext"  onfocus="this.blur()" th:value= "'0'"/>
+				
 				<br>
 				<label for="price">Ukupna cijena iznosi </label>
 				<input type="text" id="price" readonly="readonly" class="form-control-plaintext"  onfocus="this.blur()" th:value="'0 HRK'"/>

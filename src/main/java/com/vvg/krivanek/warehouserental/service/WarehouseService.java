@@ -16,6 +16,8 @@ public interface WarehouseService {
 	void saveWarehouse(Warehouse warehouse);
 
 	void updateWarehouse(Warehouse warehouse);
-	
-	void deleteWarehouse (String warehouseId);
+
+	void deleteWarehouse(String warehouseId);
+
+	Page<Warehouse> getControllReadyWarehouses(Pageable pageable);
 }

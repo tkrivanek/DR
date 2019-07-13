@@ -5,11 +5,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.vvg.krivanek.warehouserental.dao.service.WarehouseAuctionDaoService;
+import com.vvg.krivanek.warehouserental.dao.service.provider.WarehouseDaoServiceProvider.WarehouseMapper;
 import com.vvg.krivanek.warehouserental.domain.Warehouse;
 import com.vvg.krivanek.warehouserental.domain.WarehouseAuction;
 
@@ -18,6 +23,9 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	NamedParameterJdbcTemplate jdbc;
 
 	@Override
 	public List<WarehouseAuction> getWarehousesOnAuction() {
@@ -73,6 +81,39 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 				warehouseAuction.setWarehouse(warehouse);
 			}
 			return warehouseAuction;
+		}
+	}
+	
+//	@Override
+//	public Page<Warehouse> getRentFinishedWarehouses(Pageable pageable) {
+//		
+		
+//		StringBuilder countQuery = new StringBuilder("SELECT count(1) AS row_count "
+//				+" FROM user_warehouse, warehouse, warehouse_status, warehouse_type, user "
+//				+" where user_warehouse.warehouse_id = warehouse.id and user_warehouse.active and warehouse.status_id=warehouse_status.id and warehouse.type_id=warehouse_type.id and user_warehouse.user_id=user.id");
+//				
+//
+//		StringBuilder queryForList = new StringBuilder("SELECT user_warehouse.date_from, user_warehouse.date_to, warehouse.name, warehouse.address, warehouse.auction_start_price, warehouse.daily_price, warehouse.full, warehouse.status_id, warehouse.type_id, "
+//				+"warehouse_status.name, warehouse_type.name, user.name, user.surname, user.address, user.phone, user.email "
+//				+" FROM user_warehouse, warehouse, warehouse_status, warehouse_type, user "
+//				+" where user_warehouse.warehouse_id = warehouse.id and user_warehouse.active and warehouse.status_id=warehouse_status.id and warehouse.type_id=warehouse_type.id and user_warehouse.user_id=user.id");
+//				
+//		
+//		queryForList.append(" LIMIT " + pageable.getPageSize() + " " + "OFFSET " + pageable.getOffset());
+//		int totalCount = jdbcTemplate.queryForObject(countQuery.toString(), Integer.class);
+//
+//		List<Warehouse> warehouses = jdbc.query(queryForList.toString(), new WarehouseMapper());
+//
+//		return new PageImpl<>(warehouses, pageable, totalCount);
+//	}
+
+	class WarehouseMapper implements RowMapper<Warehouse> {
+		@Override
+		public Warehouse mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			
+			return null;
+			
 		}
 	}
 }

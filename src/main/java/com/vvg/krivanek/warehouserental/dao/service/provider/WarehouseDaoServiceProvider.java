@@ -121,7 +121,7 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 	@Override
 	public void updateWarehouse(Warehouse warehouse) {
 		StringBuilder query = new StringBuilder(
-				"UPDATE WAREHOUSE SET DAILY_PRICE = :dailyPrice, TYPE_ID = :typeId, STATUS_ID = :statusId, FULL = :full, NAME = :name, VOLUME = :volume, AUCTION_START_PRICE = :auctionStartPrice, ADDRESS = :address, ACTIVE = :active\r\n"
+				"UPDATE WAREHOUSE SET DAILY_PRICE = :dailyPrice, TYPE_ID = :typeId, STATUS_ID = :statusId, FULL = :full, NAME = :name, VOLUME = :volume, AUCTION_START_PRICE = :auctionStartPrice, ADDRESS = :address, ACTIVE = :active"
 						+ "WHERE id = :id");
 
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
@@ -149,4 +149,39 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 		jdbc.update(query.toString(), parameters);
 	}
 
+	@Override
+	public List<Warehouse> getRentFinishedWarehouses() {
+		StringBuilder queryForList = new StringBuilder(
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE, WAREHOUSE_STATUS.ID, WAREHOUSE_STATUS.NAME, WAREHOUSE_STATUS.CODE "
+				+ " FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, USER_WAREHOUSE"
+				+ " WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID AND user_warehouse.ACTIVE "
+				+ " AND USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND  USER_WAREHOUSE.DATE_TO < CURRENT_DATE() AND WAREHOUSE.STATUS_ID != 5");
+		
+		return jdbc.query(queryForList.toString(), new WarehouseMapper());
+	}
+
+	@Override
+	public Page<Warehouse> getControllReadyWarehouses(Pageable pageable) {
+		StringBuilder countQuery = new StringBuilder(
+				"SELECT count(1) AS row_count "
+				+ " FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, USER_WAREHOUSE"
+				+ " WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID AND user_warehouse.ACTIVE "
+				+ " AND USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND  USER_WAREHOUSE.DATE_TO < CURRENT_DATE() AND WAREHOUSE.STATUS_ID = 5");
+		
+		StringBuilder queryForList = new StringBuilder(
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE, WAREHOUSE_STATUS.ID, WAREHOUSE_STATUS.NAME, WAREHOUSE_STATUS.CODE "
+				+ " FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, USER_WAREHOUSE"
+				+ " WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID AND user_warehouse.ACTIVE "
+				+ " AND USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND  USER_WAREHOUSE.DATE_TO < CURRENT_DATE() AND WAREHOUSE.STATUS_ID = 5");
+
+		queryForList.append(" LIMIT " + pageable.getPageSize() + " " + "OFFSET " + pageable.getOffset());
+		int totalCount = template.queryForObject(countQuery.toString(), Integer.class);
+
+		List<Warehouse> warehouses = jdbc.query(queryForList.toString(), new WarehouseMapper());
+
+		return new PageImpl<>(warehouses, pageable, totalCount);
+	}
+
+	
+	
 }

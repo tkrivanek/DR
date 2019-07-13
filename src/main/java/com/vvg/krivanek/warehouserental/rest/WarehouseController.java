@@ -76,4 +76,15 @@ public class WarehouseController {
 		model.addAttribute("warehouseStatuses", warehouseStatusService.getWarehouseStatuses());
 		return "createWarehouse";
 	}
+
+	@GetMapping("/getWarehousesForControl")
+	public String getControllerReadyWarehouses(@RequestParam(name = "page", required = false, defaultValue = "0") int page,Warehouse warehouse, Model model) {
+		model.addAttribute("warehouses", warehouseService.getControllReadyWarehouses(PageRequest.of(page, 6)));
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			model.addAttribute("user",
+					userDaoService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		}
+		model.addAttribute("currentPage", page);
+		return "warehousesForControll"; // view
+	}
 }

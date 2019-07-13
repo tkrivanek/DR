@@ -46,7 +46,7 @@
 			<ul class="nav nav-pills">
 				<li class="nav-item"
 					th:each="i : ${#numbers.sequence(0,userWarehouses.totalPages-1)}">
-					<a th:href="@{${#httpServletRequest.requestURI}(page=${i})}"
+					<a th:href="@{${#httpServletRequest.requestURI}(page=${i}, userId=${user.id})}"
 						th:text="${i+1} " class="nav-link"
 						th:classappend="${currentPage}==${i}?'active' : ''"></a>
 			</ul>
