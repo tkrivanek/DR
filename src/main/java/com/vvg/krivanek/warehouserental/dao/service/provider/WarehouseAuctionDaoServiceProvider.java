@@ -10,11 +10,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.vvg.krivanek.warehouserental.dao.service.WarehouseAuctionDaoService;
-import com.vvg.krivanek.warehouserental.dao.service.provider.WarehouseDaoServiceProvider.WarehouseMapper;
+import com.vvg.krivanek.warehouserental.domain.AuctionBid;
 import com.vvg.krivanek.warehouserental.domain.Warehouse;
 import com.vvg.krivanek.warehouserental.domain.WarehouseAuction;
 
@@ -23,20 +24,30 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	NamedParameterJdbcTemplate jdbc;
 
 	@Override
-	public List<WarehouseAuction> getWarehousesOnAuction() {
-		StringBuilder query = new StringBuilder(
-				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE,  WAREHOUSE_STATUS.ID, WAREHOUSE_STATUS.NAME, WAREHOUSE_STATUS.CODE, WAREHOUSE_AUCTION.*, WAREHOUSE_AUCTION_STATUS.NAME, USER.USERNAME "
-						+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, WAREHOUSE_AUCTION, WAREHOUSE_AUCTION_STATUS, USER "
-						+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID "
-						+ "AND WAREHOUSE_AUCTION.WAREHOUSE_ID= WAREHOUSE.ID AND WAREHOUSE_AUCTION.STATUS_ID=WAREHOUSE_AUCTION_STATUS.ID "
-						+ "AND WAREHOUSE_AUCTION.USER_ID=USER.ID AND WAREHOUSE.ACTIVE");
+	public Page<WarehouseAuction> getWarehousesOnAuction(Pageable pageable) {
+		StringBuilder countQuery = new StringBuilder("SELECT count(1) AS row_count "
+				+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, WAREHOUSE_AUCTION, USER "
+				+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID "
+				+ "AND WAREHOUSE_AUCTION.WAREHOUSE_ID= WAREHOUSE.ID "
+				+ "AND WAREHOUSE_AUCTION.USERNAME=USER.USERNAME ");
 
-		return jdbcTemplate.query(query.toString(), new WarehouseAuctionMapper());
+		StringBuilder query = new StringBuilder(
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.id, WAREHOUSE_AUCTION.*, WAREHOUSE_STATUS.*"
+						+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, WAREHOUSE_AUCTION, USER "
+						+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID "
+						+ "AND WAREHOUSE_AUCTION.WAREHOUSE_ID= WAREHOUSE.ID "
+						+ "AND WAREHOUSE_AUCTION.USERNAME=USER.USERNAME ");
+
+		countQuery.append(" LIMIT " + pageable.getPageSize() + " " + " OFFSET " + pageable.getOffset());
+		int totalCount = jdbcTemplate.queryForObject(countQuery.toString(), Integer.class);
+
+		List<WarehouseAuction> warehouseAuctions = jdbcTemplate.query(query.toString(), new WarehouseAuctionMapper());
+		return new PageImpl<>(warehouseAuctions, pageable, totalCount);
 	}
 
 	class WarehouseAuctionMapper implements RowMapper<WarehouseAuction> {
@@ -48,12 +59,12 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 				warehouseAuction.setId(rs.getLong("WAREHOUSE_AUCTION.ID"));
 				warehouseAuction.setStartPrice(rs.getString("WAREHOUSE_AUCTION.START_PRICE"));
 				warehouseAuction.setName(rs.getString("WAREHOUSE_AUCTION.NAME"));
-				warehouseAuction.setStatus(rs.getString("WAREHOUSE_AUCTION_STATUS.NAME"));
+//				warehouseAuction.setStatus(rs.getString("WAREHOUSE_AUCTION_STATUS.NAME"));
 				warehouseAuction.setStartDate(rs.getDate("WAREHOUSE_AUCTION.START_DATE"));
 				warehouseAuction.setEndDate(rs.getDate("WAREHOUSE_AUCTION.END_DATE"));
 				warehouseAuction.setEndPrice(rs.getString("WAREHOUSE_AUCTION.END_PRICE"));
 				warehouseAuction.setBidPrice(rs.getString("WAREHOUSE_AUCTION.BID_PRICE"));
-				warehouseAuction.setUsername(rs.getString("USER.USERNAME"));
+				warehouseAuction.setUsername(rs.getString("WAREHOUSE_AUCTION.USERNAME"));
 
 				warehouse.setId(rs.getLong("WAREHOUSE.ID"));
 				warehouse.setAddress(rs.getString("WAREHOUSE.ADDRESS"));
@@ -62,58 +73,83 @@ public class WarehouseAuctionDaoServiceProvider implements WarehouseAuctionDaoSe
 				warehouse.setFull(rs.getBoolean("WAREHOUSE.FULL"));
 				warehouse.setName(rs.getString("WAREHOUSE.NAME"));
 
-//				WarehouseStatus warehouseStatus = new WarehouseStatus();
-//				warehouseStatus.setId(rs.getString("WAREHOUSE_STATUS.ID"));
-//				warehouseStatus.setName(rs.getString("WAREHOUSE_STATUS.NAME"));
-//				warehouseStatus.setCode(rs.getString("WAREHOUSE_STATUS.CODE"));
-//				warehouse.setWarehouseStatus(warehouseStatus);
 				warehouse.setWarehouseStatusId(rs.getString("WAREHOUSE_STATUS.ID"));
 				warehouse.setWarehouseStatusName(rs.getString("WAREHOUSE_STATUS.NAME"));
-//				WarehouseType warehouseType = new WarehouseType();
-//				warehouseType.setId(rs.getString("WAREHOUSE_TYPE.ID"));
-//				warehouseType.setName(rs.getString("WAREHOUSE_TYPE.NAME"));
-//				warehouseType.setCode(rs.getString("WAREHOUSE_TYPE.CODE"));
-//				warehouse.setWarehouseType(warehouseType);
+
 				warehouse.setWarehouseTypeId(rs.getString("WAREHOUSE_TYPE.ID"));
 				warehouse.setWarehouseTypeName(rs.getString("WAREHOUSE_TYPE.NAME"));
-				
+
 				warehouse.setVolume(rs.getLong("WAREHOUSE.VOLUME"));
 				warehouseAuction.setWarehouse(warehouse);
 			}
 			return warehouseAuction;
 		}
 	}
-	
-//	@Override
-//	public Page<Warehouse> getRentFinishedWarehouses(Pageable pageable) {
-//		
-		
-//		StringBuilder countQuery = new StringBuilder("SELECT count(1) AS row_count "
-//				+" FROM user_warehouse, warehouse, warehouse_status, warehouse_type, user "
-//				+" where user_warehouse.warehouse_id = warehouse.id and user_warehouse.active and warehouse.status_id=warehouse_status.id and warehouse.type_id=warehouse_type.id and user_warehouse.user_id=user.id");
-//				
-//
-//		StringBuilder queryForList = new StringBuilder("SELECT user_warehouse.date_from, user_warehouse.date_to, warehouse.name, warehouse.address, warehouse.auction_start_price, warehouse.daily_price, warehouse.full, warehouse.status_id, warehouse.type_id, "
-//				+"warehouse_status.name, warehouse_type.name, user.name, user.surname, user.address, user.phone, user.email "
-//				+" FROM user_warehouse, warehouse, warehouse_status, warehouse_type, user "
-//				+" where user_warehouse.warehouse_id = warehouse.id and user_warehouse.active and warehouse.status_id=warehouse_status.id and warehouse.type_id=warehouse_type.id and user_warehouse.user_id=user.id");
-//				
-//		
-//		queryForList.append(" LIMIT " + pageable.getPageSize() + " " + "OFFSET " + pageable.getOffset());
-//		int totalCount = jdbcTemplate.queryForObject(countQuery.toString(), Integer.class);
-//
-//		List<Warehouse> warehouses = jdbc.query(queryForList.toString(), new WarehouseMapper());
-//
-//		return new PageImpl<>(warehouses, pageable, totalCount);
-//	}
 
 	class WarehouseMapper implements RowMapper<Warehouse> {
 		@Override
 		public Warehouse mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			
+
 			return null;
-			
+
 		}
+	}
+
+	@Override
+	public void insertWarehouseAuction(WarehouseAuction warehouseAuction) {
+		StringBuilder query = new StringBuilder(
+				"INSERT INTO WAREHOUSE_AUCTION (WAREHOUSE_ID, START_PRICE, NAME, START_DATE, END_DATE, END_PRICE, BID_PRICE, USERNAME) "
+						+ "VALUES (:warehouseId, :startPrice, :name, :startDate, :endDate, :endPrice, :bidPrice, :username)");
+
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("warehouseId", warehouseAuction.getWarehouseId());
+		parameters.addValue("startPrice", warehouseAuction.getStartPrice());
+		parameters.addValue("name", warehouseAuction.getName());
+		parameters.addValue("startDate", warehouseAuction.getStartDate());
+		parameters.addValue("endDate", warehouseAuction.getEndDate());
+		parameters.addValue("endPrice", warehouseAuction.getEndPrice());
+		parameters.addValue("bidPrice", warehouseAuction.getBidPrice());
+		parameters.addValue("username", warehouseAuction.getUsername());
+		jdbc.update(query.toString(), parameters);
+	}
+
+	@Override
+	public WarehouseAuction getWarehouseAuctionById(String auctionWarehouseId) {
+		StringBuilder query = new StringBuilder(
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.id, WAREHOUSE_AUCTION.*, WAREHOUSE_STATUS.* "
+						+ "FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, WAREHOUSE_AUCTION, USER "
+						+ "WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID "
+						+ "AND WAREHOUSE_AUCTION.WAREHOUSE_ID= WAREHOUSE.ID "
+						+ "AND WAREHOUSE_AUCTION.USERNAME=USER.USERNAME AND WAREHOUSE_AUCTION.ID = :id");
+
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("id", auctionWarehouseId);
+
+		return jdbc.queryForObject(query.toString(), parameters, new WarehouseAuctionMapper());
+	}
+
+	@Override
+	public void insertAuctionBid(AuctionBid auctionBid) {
+		StringBuilder query = new StringBuilder(
+				"INSERT INTO AUCTION_BID (USER_ID, WAREHOUSE_AUCTION_ID, BID_PRICE) VALUES ( :userId, :warehouseAuctionId, :bidPrice)");
+
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("userId", auctionBid.getUserId());
+		parameters.addValue("warehouseAuctionId", auctionBid.getWarehouseAuctionId());
+		parameters.addValue("bidPrice", auctionBid.getBidPrice());
+		jdbc.update(query.toString(), parameters);
+
+	}
+
+	@Override
+	public void updateBidPrice(Long warehouseAuctionId, String bidPrice) {
+		StringBuilder query = new StringBuilder(
+				"UPDATE WAREHOUSE_AUCTION SET BID_PRICE=:bidPrice WHERE ID=:warehouseAuctionId");
+
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("warehouseAuctionId", warehouseAuctionId);
+		parameters.addValue("bidPrice", bidPrice);
+		jdbc.update(query.toString(), parameters);
+		
 	}
 }

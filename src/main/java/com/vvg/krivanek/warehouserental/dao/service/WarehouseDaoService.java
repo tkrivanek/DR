@@ -14,12 +14,16 @@ public interface WarehouseDaoService {
 	Warehouse getWarehouseById(String warehouseId);
 
 	void saveWarehouse(Warehouse warehouse);
-	
-	void updateWarehouse (Warehouse warehouse);
-	
+
+	void updateWarehouse(Warehouse warehouse);
+
 	void deleteWarehouse(String warehouseId);
-	
+
 	List<Warehouse> getRentFinishedWarehouses();
 	
+	List<Warehouse> getAuctionReadyWarehouses();
+
 	Page<Warehouse> getControllReadyWarehouses(Pageable pageable);
+
+
 }

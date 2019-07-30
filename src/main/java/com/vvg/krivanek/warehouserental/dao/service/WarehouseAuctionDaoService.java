@@ -1,17 +1,20 @@
 package com.vvg.krivanek.warehouserental.dao.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.vvg.krivanek.warehouserental.domain.Warehouse;
+import com.vvg.krivanek.warehouserental.domain.AuctionBid;
 import com.vvg.krivanek.warehouserental.domain.WarehouseAuction;
 
 public interface WarehouseAuctionDaoService {
 
-	List<WarehouseAuction> getWarehousesOnAuction();
-	
-//	Page<Warehouse> getRentFinishedWarehouses(Pageable pageable);
+	Page<WarehouseAuction> getWarehousesOnAuction(Pageable pageable);
+		
+	void insertWarehouseAuction (WarehouseAuction warehouseAuction);
 
+	WarehouseAuction getWarehouseAuctionById (String auctionWarehouseId);
+	
+	void insertAuctionBid (AuctionBid auctionBid);
+	
+	void updateBidPrice(Long warehouseAuctionId, String bidPrice);
 }

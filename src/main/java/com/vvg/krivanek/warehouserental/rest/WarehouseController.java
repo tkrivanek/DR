@@ -51,9 +51,14 @@ public class WarehouseController {
 	}
 
 	@PostMapping("/updateWarehouse")
-	public String updateWarehouse(Warehouse warehouse) {
-		warehouseService.updateWarehouse(warehouse);
-		return "redirect:/getWarehouses";
+	public String updateWarehouse(@RequestParam(name = "control", required = false) boolean control,
+			Warehouse warehouse) {
+		warehouseService.updateWarehouse(warehouse, control);
+		if (control) {
+			return "redirect:/getWarehousesForControl";
+		} else {
+			return "redirect:/getWarehouses";
+		}
 	}
 
 	@DeleteMapping("/deleteWarehouse")
@@ -63,11 +68,16 @@ public class WarehouseController {
 	}
 
 	@GetMapping("/findWarehouse")
-	public String findWarehouse(@RequestParam(name = "warehouseId", required = true) String warehouseId, Model model) {
+	public String findWarehouse(@RequestParam(name = "warehouseId", required = true) String warehouseId,
+			@RequestParam(name = "control", required = false) boolean control, Model model) {
 		model.addAttribute("warehouse", warehouseService.getWarehouse(warehouseId));
 		model.addAttribute("warehouseTypes", warehouseTypeService.getWarehouseTypes());
 		model.addAttribute("warehouseStatuses", warehouseStatusService.getWarehouseStatuses());
-		return "editWarehouse";
+		if (!control) {
+			return "editWarehouse";
+		} else {
+			return "editControlWarehouse";
+		}
 	}
 
 	@GetMapping("/createWarehouse")
@@ -78,7 +88,9 @@ public class WarehouseController {
 	}
 
 	@GetMapping("/getWarehousesForControl")
-	public String getControllerReadyWarehouses(@RequestParam(name = "page", required = false, defaultValue = "0") int page,Warehouse warehouse, Model model) {
+	public String getControllerReadyWarehouses(
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page, Warehouse warehouse,
+			Model model) {
 		model.addAttribute("warehouses", warehouseService.getControllReadyWarehouses(PageRequest.of(page, 6)));
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
 			model.addAttribute("user",

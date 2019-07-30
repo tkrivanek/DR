@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/header :: shared-header" />
+
+</head>
+<body>
+	<div class="container">
+		<div th:replace="common/navbar :: navbar-group (userId = '')" /></div>
+
+		<!-- Page Content -->
+		<div class="container addPadding">
+			<br>
+			<form th:object="${warehouse}" th:action="@{/updateWarehouse(control=true)}"
+				method="post">
+				<div class="form-group">
+				
+				<label for="name">Naziv skladišta</label>
+					<input type="text" readonly="readonly"
+						class="form-control-plaintext" onfocus="this.blur()"
+						id="inputName" required placeholder="Unesite naziv"
+						oninvalid="this.setCustomValidity('Molimo unesite naziv skladišta')"
+						oninput="setCustomValidity('')" th:value="${warehouse.name}"
+						th:field="*{name}">
+
+					<label for="volume">Volumen skladišta</label>
+					<input type="text" readonly="readonly"
+						class="form-control-plaintext" onfocus="this.blur()"
+						id="inputVolume" required th:value="${warehouse.volume}"
+						th:field="*{volume}">
+
+					<label for="volume">Adresa skladišta</label>
+					<input type="text" readonly="readonly"
+						class="form-control-plaintext" onfocus="this.blur()"
+						id="inputAddress" required th:value="${warehouse.address}"
+						th:field="*{address}">
+
+					<label for="volume">Dnevna cijena skladišta</label>
+					<input type="text" readonly="readonly"
+						class="form-control-plaintext" onfocus="this.blur()"
+						id="inputPrice" required th:value="${warehouse.dailyPrice}"
+						th:field="*{dailyPrice}">
+
+					<label for="name">Početna cijena aukcije</label>
+					<input type="text" id="auctionStartPrice" required
+						placeholder="Unesite početnu cijenu aukcije"
+						oninvalid="this.setCustomValidity('Molimo unesite početnu cijenu aukcije skladišta')"
+						oninput="setCustomValidity('')"
+						th:value="${warehouse.auctionStartPrice}"
+						th:name="auctionStartPrice" th:id="auctionStartPrice">
+
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="full"
+							th:checked="${warehouse.full}" th:name="full" th:id="full">
+						<label class="form-check-label" for="fullCheck">Skladište
+							puno</label>
+					</div>
+
+					<input type="hidden" th:value="${warehouse.id}" id="warehouseId"
+						th:field="*{id}" />
+					<input type="hidden" th:value="${warehouse.warehouseTypeId}" id="warehouseTypeId"
+						th:field="*{warehouseTypeId}" />
+					<input type="hidden" th:value="${warehouse.warehouseStatusId}" id="warehouseStatusId"
+						th:field="*{warehouseStatusId}" />
+				</div>
+
+				<button type="submit" class="btn btn-success">Spremi
+					skladište</button>
+				<button type="button" class="btn btn-danger" data-toggle="modal"
+					data-target="#confirmCancelModal">Odustani</button>
+			</form>
+
+			<!-- Modal -->
+			<div class="modal fade" id="confirmCancelModal" tabindex="-1"
+				role="dialog" aria-labelledby="confirmCancelModal"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalCenterTitle">Želite
+								odustati?</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<!--<div class="modal-body">...</div>-->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-success btn-sm"
+								data-dismiss="modal">Nastavi</button>
+
+							<a class="btn btn-danger btn-sm"
+								th:href="@{/getWarehouses(page=0)}">
+								Odbaci promjene
+								<span class="sr-only">(current)</span>
+							</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- /.container -->
+	</div>
+	<!-- /container -->
+	<div th:replace="common/footer :: bottom-script" /></div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/header :: shared-header" />
+
+</head>
+<body>
+
+	<div th:replace="common/navbar :: navbar-group (userId=${user.id})" /></div>
+	<div class="container">
+		<!-- Page Content -->
+		<br>
+		<div th:if="${not #lists.isEmpty(warehouseAuctions.content)}"
+			class="col-lg-9 addPadding">
+
+			<table class="table table-hover">
+				<tr>
+					<th>Ime skladišta</th>
+					<th>Početna cijena aukcije</th>
+					<th>Datum početka aukcije</th>
+					<th>Datum završetka aukcije</th>
+					<th>Posljednja ponuda (HRK)</th>
+				</tr>
+				<tr th:each="warehouseAuction, iStat : ${warehouseAuctions}"
+					th:style="${iStat.odd}? 'font-weight: bold;'"
+					th:alt-title="${iStat.even}? 'even' : 'odd'">
+					<td th:text="${warehouseAuction.name}" />
+					<td th:text="${warehouseAuction.startPrice}" />
+					<td th:text="${warehouseAuction.startDate}" />
+					<td th:text="${warehouseAuction.endDate}" />
+					<td th:text="${warehouseAuction.bidPrice}" />
+					<td>
+						<a class="btn btn-info btn-sm"
+							th:href="@{/getWarehouseAuction(warehouseAuctionId=${warehouseAuction.id}, control=true)}">
+							Detalji </a>
+					</td>
+				</tr>
+			</table>
+			<hr />
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i : ${#numbers.sequence(0,warehouseAuctions.totalPages-1)}">
+					<a th:href="@{${#httpServletRequest.requestURI}(page=${i})}"
+						th:text="${i+1} " class="nav-link"
+						th:classappend="${currentPage}==${i}?'active' : ''"></a>
+			</ul>
+		</div>
+		<div th:if="${#lists.isEmpty(warehouseAuctions.content)}"
+			class="col-lg-9 addPadding">
+			<p class="addPadding">Nema rezultata</p>
+		</div>
+
+	</div>
+	<!-- /container -->
+	<div th:replace="common/footer :: bottom-script"></div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

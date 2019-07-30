@@ -7,7 +7,7 @@ import com.vvg.krivanek.warehouserental.domain.Warehouse;
 
 public interface WarehouseService {
 
-	void warehouseScheduler();
+//	void warehouseScheduler();
 
 	Page<Warehouse> getWarehouses(boolean notRented, boolean auction, Pageable pageable);
 
@@ -15,9 +15,10 @@ public interface WarehouseService {
 
 	void saveWarehouse(Warehouse warehouse);
 
-	void updateWarehouse(Warehouse warehouse);
+	void updateWarehouse(Warehouse warehouse, boolean control);
 
 	void deleteWarehouse(String warehouseId);
 
 	Page<Warehouse> getControllReadyWarehouses(Pageable pageable);
+
 }

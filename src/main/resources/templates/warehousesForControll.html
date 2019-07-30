@@ -22,10 +22,8 @@
 					<th>Adresa</th>
 					<th>Dnevna cijena (HRK)</th>
 					<th>Početna cijena aukcije (HRK)</th>
-					<th>Skladište puno</th>
 				</tr>
-				<form th:object="${warehouse}" th:action="@{/updateWarehouse}"
-					method="post">
+
 				<tr th:each="warehouse, iStat : ${warehouses}">
 					<td>
 						<input type="text" id="name"
@@ -55,25 +53,14 @@
 							th:name="dailyPrice" th:id="dailyPrice">
 					</td>
 					<td>
-						<input type="text" class="form-control" id="inputPrice" required
-							placeholder="Unesite početnu cijenu za aukciju u HRK"
-							oninvalid="this.setCustomValidity('Molimo unesite početnu cijenu za aukciju skladišta')"
-							oninput="setCustomValidity('')"
-							th:value="${warehouse.auctionStartPrice}"
+						<input type="text" readonly="readonly" class="form-control-plaintext"
+							onfocus="this.blur()" id="inputPrice" th:value="${warehouse.auctionStartPrice}"
 							th:name="auctionStartPrice" th:id="auctionStartPrice">
 					</td>
 					<td>
-						<div class="form-check">
-							<input type="checkbox" class="form-check-input"
-								id="exampleCheck1" th:value="${warehouse.full}" th:name="full"
-								th:id="full">
-							<label class="form-check-label" for="exampleCheck1">Skladište
-								puno</label>
-						</div>
-					</td>
-					<td>
-						<button type="submit" class="btn btn-success">Spremi
-							skladište</button>
+						<a class="btn btn-info btn-sm"
+							th:href="@{/findWarehouse(warehouseId=${warehouse.id}, control=true)}">
+							Uredi </a>
 					</td>
 					<td>
 						<input type="hidden" id="warehouseId" th:value="${warehouse.id}"
@@ -82,7 +69,7 @@
 							th:name="userId" th:id="userId">
 					</td>
 				</tr>
-				</form>
+
 			</table>
 
 

@@ -122,7 +122,7 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 	public void updateWarehouse(Warehouse warehouse) {
 		StringBuilder query = new StringBuilder(
 				"UPDATE WAREHOUSE SET DAILY_PRICE = :dailyPrice, TYPE_ID = :typeId, STATUS_ID = :statusId, FULL = :full, NAME = :name, VOLUME = :volume, AUCTION_START_PRICE = :auctionStartPrice, ADDRESS = :address, ACTIVE = :active"
-						+ "WHERE id = :id");
+						+ " WHERE id = :id");
 
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("id", warehouse.getId());
@@ -155,7 +155,18 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE, WAREHOUSE_STATUS.ID, WAREHOUSE_STATUS.NAME, WAREHOUSE_STATUS.CODE "
 				+ " FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, USER_WAREHOUSE"
 				+ " WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID AND user_warehouse.ACTIVE "
-				+ " AND USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND  USER_WAREHOUSE.DATE_TO < CURRENT_DATE() AND WAREHOUSE.STATUS_ID != 5");
+				+ " AND USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND  USER_WAREHOUSE.DATE_TO < CURRENT_DATE() AND WAREHOUSE.STATUS_ID = 1");
+		
+		return jdbc.query(queryForList.toString(), new WarehouseMapper());
+	}
+	
+	@Override
+	public List<Warehouse> getAuctionReadyWarehouses() {
+		StringBuilder queryForList = new StringBuilder(
+				"SELECT WAREHOUSE.*, WAREHOUSE_TYPE.ID, WAREHOUSE_TYPE.NAME, WAREHOUSE_TYPE.CODE, WAREHOUSE_STATUS.ID, WAREHOUSE_STATUS.NAME, WAREHOUSE_STATUS.CODE "
+				+ " FROM WAREHOUSE, WAREHOUSE_TYPE, WAREHOUSE_STATUS, USER_WAREHOUSE"
+				+ " WHERE WAREHOUSE.STATUS_ID=WAREHOUSE_STATUS.ID AND WAREHOUSE.TYPE_ID=WAREHOUSE_TYPE.ID AND user_warehouse.ACTIVE "
+				+ " AND USER_WAREHOUSE.WAREHOUSE_ID = WAREHOUSE.ID AND  USER_WAREHOUSE.DATE_TO < CURRENT_DATE() AND WAREHOUSE.STATUS_ID = 4");
 		
 		return jdbc.query(queryForList.toString(), new WarehouseMapper());
 	}
@@ -181,7 +192,4 @@ public class WarehouseDaoServiceProvider implements WarehouseDaoService {
 
 		return new PageImpl<>(warehouses, pageable, totalCount);
 	}
-
-	
-	
 }
