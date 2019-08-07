@@ -1,111 +1,312 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head th:replace="common/header :: shared-header" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Aplikacija za praktični dio diplomskog rada">
+	<meta name="author" content="Tomislav Krivanek">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title  -->
+    <title>Skladišta</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Core Style CSS -->
+    <link href="../static/css/warehouse.css" rel="stylesheet" th:href="@{/css/warehouse.css}" />
+	<link href="../static/css/bootstrap-datepicker3.css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" />
+	<link href="../static/css/core-style.css" rel="stylesheet" th:href="@{/css/core-style.css}" />
+
 
 </head>
+
 <body>
-	<div class="container">
-		<div th:replace="common/navbar :: navbar-group (userId = '')" /></div>
+    <!-- ##### Main Content Wrapper Start ##### -->
+    <div class="main-content-wrapper d-flex clearfix">
 
-		<!-- Page Content -->
-		<div class="container addPadding">
-			<br>
-			<form th:object="${warehouse}" th:action="@{/updateWarehouse}"
-				method="post">
-				<div class="form-group">
-					<label for="warehouseType">Vrsta skladišta</label>
-					<select class="form-control" id="warehouseType" required
-						oninvalid="this.setCustomValidity('Molimo odaberite vrstu skladišta')"
-						oninput="setCustomValidity('')" th:field="*{warehouseTypeId}">
-						<option th:each="warehouseType : ${warehouseTypes}"
-							th:text="${warehouseType.name}" th:value="${warehouseType.id}"
-							th:selected="${warehouse.warehouseTypeId == warehouseType.id}">
-						</option>
-					</select>
+        <!-- Mobile Nav (max width 767px)-->
+        <div class="mobile-nav">
+            <!-- Navbar Brand -->
+            <div class="amado-navbar-brand">
+                <a th:href="@{/}"><img src="img/core-img/logo.png" alt=""></a>
+            </div>
+            <!-- Navbar Toggler -->
+            <div class="amado-navbar-toggler">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
 
-					<label for="name">Naziv skladišta</label>
-					<input type="text" class="form-control" id="inputName" required
-						placeholder="Unesite naziv"
-						oninvalid="this.setCustomValidity('Molimo unesite naziv skladišta')"
-						oninput="setCustomValidity('')" th:value="${warehouse.name}"
-						th:field="*{name}">
+        <!-- Header Area Start -->
+        <header class="header-area clearfix">
+            <!-- Close Icon -->
+            <div class="nav-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </div>
+            <!-- Logo -->
+            <div class="logo">
+                <a th:href="@{/}"><img src="img/core-img/logo.png" alt=""></a>
+            </div>
+            <!-- Amado Nav -->
+            <nav class="amado-nav mb-100">
+                <ul>
+                    <li><a th:href="@{/}">Početna</a></li>
+                    <li class="active"><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a></li>
+                    <li><a th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja iznajmljena skladišta</a></li>
+                    <li><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </nav>
+            <!-- Social Button -->
+            <div class="social-info d-flex justify-content-between">
+                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+        </header>
+        <!-- Header Area End -->
 
-					<label for="volume">Volumen skladišta</label>
-					<input type="text" class="form-control" id="inputVolume" required
-						placeholder="Unesite volumen"
-						oninvalid="this.setCustomValidity('Molimo unesite naziv skladišta')"
-						oninput="setCustomValidity('')" th:value="${warehouse.volume}"
-						th:field="*{volume}">
+        <!-- Product Details Area Start -->
+        <div class="single-product-area section-padding-100 clearfix">
+            <div class="container-fluid">
 
-					<label for="volume">Adresa skladišta</label>
-					<input type="text" class="form-control" id="inputAddress" required
-						placeholder="Unesite adresu"
-						oninvalid="this.setCustomValidity('Molimo unesite adresu skladišta')"
-						oninput="setCustomValidity('')" th:value="${warehouse.address}"
-						th:field="*{address}">
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mt-50">
+                                <li class="breadcrumb-item"><a th:href="@{/}">Početna</a></li>
+                                <li class="breadcrumb-item"><a th:href="@{/getWarehouses(page=0)}">Pregled skladišta</a></li>
+                                <li class="breadcrumb-item"><a th:href="@{/getWarehouses(page=0)}">Sva skladišta</a></li>
+                                <li class="breadcrumb-item active" aria-current="page" th:text="${warehouse.name}"></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
 
-					<label for="volume">Dnevna cijena skladišta</label>
-					<input type="text" class="form-control" id="inputPrice" required
-						placeholder="Unesite dnevnu cijenu u HRK"
-						oninvalid="this.setCustomValidity('Molimo unesite dnevnu cijenu skladišta')"
-						oninput="setCustomValidity('')" th:value="${warehouse.dailyPrice}"
-						th:field="*{dailyPrice}">
+                <div class="row">
+                    <div class="col-12 col-lg-7">
+                        <div class="single_product_thumb">
+                            <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/pro-big-1.jpg);">
+                                    </li>
+                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/pro-big-2.jpg);">
+                                    </li>
+                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/pro-big-3.jpg);">
+                                    </li>
+                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(img/product-img/pro-big-4.jpg);">
+                                    </li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
+                                            <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
+                                        </a>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <a class="gallery_img" href="img/product-img/pro-big-2.jpg">
+                                            <img class="d-block w-100" src="img/product-img/pro-big-2.jpg" alt="Second slide">
+                                        </a>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <a class="gallery_img" href="img/product-img/pro-big-3.jpg">
+                                            <img class="d-block w-100" src="img/product-img/pro-big-3.jpg" alt="Third slide">
+                                        </a>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <a class="gallery_img" href="img/product-img/pro-big-4.jpg">
+                                            <img class="d-block w-100" src="img/product-img/pro-big-4.jpg" alt="Fourth slide">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="single_product_desc">
+                       	 	<form th:object="${warehouse}" th:action="@{/updateWarehouse}" method="post">
+								<div class="row mt-50">
+									 <div class="col-3 mb-3">
+									 	<p>Naziv skladišta</p>
+									 </div>
+									 <div class="col-9 mb-3">
+                                        <input type="text" class="form-control" id="inputName" required placeholder="Unesite naziv"
+											oninvalid="this.setCustomValidity('Molimo unesite naziv skladišta')"
+											oninput="setCustomValidity('')" th:value="${warehouse.name}" th:field="*{name}"
+											data-toggle="tooltip" data-placement="top" title="Unesite naziv skladišta">
+									</div>
+									<div class="col-3 mb-3">
+									 	<p>Vrsta skladišta</p>
+									 </div>
+									<div class="col-9 mb-3">
+										<select class="w-100" id="warehouseType" required 
+											oninvalid="this.setCustomValidity('Molimo odaberite vrstu skladišta')"
+											oninput="setCustomValidity('')" th:field="*{warehouseTypeId}" 
+											data-toggle="tooltip" data-placement="top" title="Odaberite vrstu skladišta">
+											<option th:each="warehouseType : ${warehouseTypes}"
+												th:text="${warehouseType.name}" th:value="${warehouseType.id}"
+												th:selected="${warehouse.warehouseTypeId == warehouseType.id}">
+											</option>
+										</select>
+									</div>
+									<div class="col-3 mb-3">
+									 	<p>Volumen skladišta</p>
+									 </div>
+									<div class="col-md-3 mb-3">
+									<input type="text" class="form-control" id="inputVolume" required placeholder="Unesite volumen"
+										oninvalid="this.setCustomValidity('Molimo unesite naziv skladišta')"
+										oninput="setCustomValidity('')" th:value="${warehouse.volume}"
+										th:field="*{volume}" data-toggle="tooltip" data-placement="top" title="Unesite volumen u m3">
+									</div>
+									<div class="col-3 mb-3">
+									 	<p>Cijena skladišta</p>
+									 </div>
+									<div class="col-md-3 mb-3">
+									<input type="text" class="form-control" id="inputPrice" required placeholder="Unesite dnevnu cijenu u HRK"
+										oninvalid="this.setCustomValidity('Molimo unesite dnevnu cijenu skladišta')"
+										oninput="setCustomValidity('')" th:value="${warehouse.dailyPrice}"
+										th:field="*{dailyPrice}" data-toggle="tooltip" data-placement="top" title="Unesite cijenu u HRK">
+									</div>
+									
+									<div class="col-3 mb-3">
+									 	<p>Adresa skladišta</p>
+									 </div>
+									<div class="col-md-9 mb-3">
+									<input type="text" class="form-control" id="inputAddress" required placeholder="Unesite adresu"
+										oninvalid="this.setCustomValidity('Molimo unesite adresu skladišta')"
+										oninput="setCustomValidity('')" th:value="${warehouse.address}"
+										th:field="*{address}" data-toggle="tooltip" data-placement="top" title="Unesite adresu">
+									</div>
+									
+									
+									<div class="col-3 mb-3">
+									 	<p>Status skladišta</p>
+									 </div>
+									<div class="col-md-9 mb-3">
+										<select  class="w-100" id="warehouseStatus" required
+											oninvalid="this.setCustomValidity('Molimo odaberite status skladišta')"
+											oninput="setCustomValidity('')" th:field="*{warehouseStatusId}">
+											<option value="">Odaberite status skladišta</option>
+											<option th:each="warehouseStatus : ${warehouseStatuses}"
+												th:text="${warehouseStatus.name}"
+												th:value="${warehouseStatus.id}"
+												th:selected="${warehouse.warehouseStatusId == warehouseStatus.id}">
+											</option>
+										</select>
+										<input type="hidden" th:value="${warehouse.id}" id="WarehouseId" th:field="*{id}"/>
+									</div>
+									
+									<div class="col-md-6 mb-3 mt-100">
+										<button type="submit" class="btn amado-btn-neg">Odustani</button>
+									</div>
+									
+									<div class="col-md-6 mb-3 mt-100">
+										<button type="submit" class="btn amado-btn">Spremi skladište</button>
+									</div>
+                                    
+								</div>
+							</form>
+                            <!-- Add to Cart Form -->
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Product Details Area End -->
+    </div>
+    <!-- ##### Main Content Wrapper End ##### -->
 
-					<label for="warehouseStatus">Status skladišta</label>
-					<select class="form-control" id="warehouseStatus" required
-						oninvalid="this.setCustomValidity('Molimo odaberite status skladišta')"
-						oninput="setCustomValidity('')" th:field="*{warehouseStatusId}">
-						<option value="">Odaberite status skladišta</option>
-						<option th:each="warehouseStatus : ${warehouseStatuses}"
-							th:text="${warehouseStatus.name}"
-							th:value="${warehouseStatus.id}"
-							th:selected="${warehouse.warehouseStatusId == warehouseStatus.id}"></option>
-					</select>
-					
-					<input type="hidden" th:value="${warehouse.id}" id="WarehouseId" th:field="*{id}"/>
-				</div>
+    <!-- ##### Newsletter Area Start ##### -->
+    <section class="newsletter-area section-padding-100-0">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Newsletter Text -->
+                <div class="col-12 col-lg-6 col-xl-7">
+                    <div class="newsletter-text mb-100">
+                        <h2>Subscribe for a <span>25% Discount</span></h2>
+                        <p>Nulla ac convallis lorem, eget euismod nisl. Donec in libero sit amet mi vulputate consectetur. Donec auctor interdum purus, ac finibus massa bibendum nec.</p>
+                    </div>
+                </div>
+                <!-- Newsletter Form -->
+                <div class="col-12 col-lg-6 col-xl-5">
+                    <div class="newsletter-form mb-100">
+                        <form action="#" method="post">
+                            <input type="email" name="email" class="nl-email" placeholder="Your E-mail">
+                            <input type="submit" value="Subscribe">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Newsletter Area End ##### -->
 
-				<button type="submit" class="btn btn-success">Spremi
-					skladište</button>
-				<button type="button" class="btn btn-danger" data-toggle="modal"
-					data-target="#confirmCancelModal">Odustani</button>
-			</form>
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer_area clearfix">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Single Widget Area -->
+                <div class="col-12 col-lg-4">
+                    <div class="single_widget_area">
+                        <!-- Logo -->
+                        <div class="footer-logo mr-50">
+                            <a href="index.html"><img src="img/core-img/logo2.png" alt=""></a>
+                        </div>
+                        <!-- Copywrite Text -->
+                        <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div>
+                </div>
+                <!-- Single Widget Area -->
+                <div class="col-12 col-lg-8">
+                    <div class="single_widget_area">
+                        <!-- Footer Menu -->
+                        <div class="footer_menu">
+                            <nav class="navbar navbar-expand-lg justify-content-end">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                                <div class="collapse navbar-collapse" id="footerNavContent">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item active">
+                                            <a class="nav-link" href="index.html">Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="shop.html">Shop</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="product-details.html">Product</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="cart.html">Cart</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="checkout.html">Checkout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
 
-			<!-- Modal -->
-			<div class="modal fade" id="confirmCancelModal" tabindex="-1"
-				role="dialog" aria-labelledby="confirmCancelModal"
-				aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalCenterTitle">Želite
-								odustati?</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<!--<div class="modal-body">...</div>-->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-success btn-sm"
-								data-dismiss="modal">Nastavi</button>
+    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
+<script src="../static/jquery/jquery-2.2.4.min.js" th:src="@{/jquery/jquery-2.2.4.min.js}"></script>
+<script src="../static/js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../static/js/bootstrap-datepicker.min.js" th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+<script src="../static/locales/bootstrap-datepicker.hr.min.js" th:src="@{/locales/bootstrap-datepicker.hr.min.js}"></script>
+<script src="../static/js/warehouses.js" th:src="@{/js/warehouses.js}"></script>
+<script src="../static/js/plugins.js" th:src="@{/js/plugins.js}"></script>
+<script src="../static/js/active.js" th:src="@{/js/active.js}"></script>
 
-							<a class="btn btn-danger btn-sm"
-								th:href="@{/getWarehouses(page=0)}">
-								Odbaci promjene
-								<span class="sr-only">(current)</span>
-							</a>
-
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-		<!-- /.container -->
-	</div>
-	<!-- /container -->
-	<div th:replace="common/footer :: bottom-script" /></div>
 </body>
+
 </html>

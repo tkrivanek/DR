@@ -37,8 +37,8 @@ function checkDates() {
 			$("#endDate").datepicker("hide");
 			$("#fromDate").datepicker("hide");
 			$('#fromDate').datepicker('clearDates');
-			$('#numberOfDays').val('0');
-			$('#price').val('0 HRK');
+			$('#numberOfDays').text('Unajmljujete skladište na 0 dana.');
+			$('#price').text('Ukupna cijena iznosi 0 HRK');
 			return false;
 		} else {
 			return true;
@@ -71,7 +71,8 @@ function calcDiff() {
 	var date1 = $('#fromDate').datepicker('getDate');
 	var date2 = $('#endDate').datepicker('getDate');
 	var diff = 0;
-	var price = $('#dailyPrice').val();
+	var priceAll = $('#dailyPrice').text();
+	var price = priceAll.substring(0, priceAll.length -4)
 	var totPrice = 0;
 	if (date1 && date2) {
 		diff = Math.floor((date2.getTime() - date1.getTime()) / 86400000);
@@ -79,8 +80,8 @@ function calcDiff() {
 			totPrice = price * diff;
 		}
 	}
-	$('#numberOfDays').val(diff);
-	$('#price').val(totPrice + ' HRK');
+	$('#numberOfDays').text('Unajmljujete skladište na ' + diff + ' dana.');
+	$('#price').text('Ukupna cijena iznosi ' + totPrice + ' HRK');
 }
 
 // setting warehouse attributes for canceling rent

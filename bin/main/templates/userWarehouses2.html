@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/header :: shared-header" />
+
+</head>
+<body>
+
+	<div th:replace="common/navbar :: navbar-group (userId=${user.id})" /></div>
+	<div class="container">
+		<!-- Page Content -->
+		<br>
+		<div th:if="${not #lists.isEmpty(userWarehouses.content)}"
+			class="col-lg-9 addPadding">
+
+			<table class="table table-hover">
+				<tr>
+					<th>Vrsta</th>
+					<th>Ime</th>
+					<th>Volumen</th>
+					<th>Adresa</th>
+					<th>Dnevna cijena (HRK)</th>
+					<th>Unajmljeno od</th>
+					<th>Unajmljeno do</th>
+				</tr>
+				<tr th:each="userWarehouse, iStat : ${userWarehouses}"
+					th:style="${iStat.odd}? 'font-weight: bold;'"
+					th:alt-title="${iStat.even}? 'even' : 'odd'">
+					<td th:text="${userWarehouse.warehouse.warehouseTypeName}" />
+					<td th:text="${userWarehouse.warehouse.name}" />
+					<td th:text="${userWarehouse.warehouse.volume}" />
+					<td th:text="${userWarehouse.warehouse.address}" />
+					<td th:text="${userWarehouse.warehouse.dailyPrice}" />
+					<td th:text="${userWarehouse.dateFrom}" />
+					<td th:text="${userWarehouse.dateTo}" />
+					<td>
+						<button type="button" class="btn btn-danger btn-sm"
+							th:data-warehouse-id="${userWarehouse.warehouse.id}"
+							th:data-user-id="${user.id}" data-toggle="modal"
+							data-target="#confirmCancelRentModal">Otkaži najam</button>
+					</td> 
+				</tr>
+			</table>
+			<hr />
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i : ${#numbers.sequence(0,userWarehouses.totalPages-1)}">
+					<a th:href="@{${#httpServletRequest.requestURI}(page=${i}, userId=${user.id})}"
+						th:text="${i+1} " class="nav-link"
+						th:classappend="${currentPage}==${i}?'active' : ''"></a>
+			</ul>
+		</div>
+		<div th:if="${#lists.isEmpty(userWarehouses.content)}"
+			class="col-lg-9 addPadding">
+			<p class="addPadding">Nema rezultata</p>
+		</div>
+
+		<div id="confirmCancelRentModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="cancelRentForm" th:action="@{/cancelWarehouseRent}"
+						th:method="DELETE">
+						<div class="modal-header">
+							<h4 class="modal-title" id="modalTitle">Otkazivanje najma</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">
+							<p
+								th:text="'Jeste sigurni da želite otkazati najam za ovo skladište?'"></p>
+							<small
+								th:text="'Ukoliko otkažete najam izgubiti ćete mogućnost korištenja skladiša, ali nećete dobiti povrat novca za preostale dane?'"></small>
+							<input type="hidden" id="warehouseId" th:id="warehouseId"
+								th:name="warehouseId" />
+							<input type="hidden" id="userId" th:id="userId" th:name="userId" />
+						</div>
+
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" data-dismiss="modal"
+								value="Nastavi najam">
+							<!-- 							<a class="btn btn-info btn-sm" id="submitButton"> Potvrdi -->
+							<!-- 								prekid najma </a> -->
+							<input type="submit" class="btn btn-danger" value="Potvrdi">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /container -->
+	<div th:replace="common/footer :: bottom-script" /></div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

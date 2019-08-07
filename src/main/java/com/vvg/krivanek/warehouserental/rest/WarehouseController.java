@@ -71,13 +71,15 @@ public class WarehouseController {
 	public String findWarehouse(@RequestParam(name = "warehouseId", required = true) String warehouseId,
 			@RequestParam(name = "control", required = false) boolean control, Model model) {
 		model.addAttribute("warehouse", warehouseService.getWarehouse(warehouseId));
-		model.addAttribute("warehouseTypes", warehouseTypeService.getWarehouseTypes());
-		model.addAttribute("warehouseStatuses", warehouseStatusService.getWarehouseStatuses());
 		if (!control) {
-			return "editWarehouse";
-		} else {
-			return "editControlWarehouse";
+			model.addAttribute("warehouseTypes", warehouseTypeService.getWarehouseTypes());
+			model.addAttribute("warehouseStatuses", warehouseStatusService.getWarehouseStatuses());
 		}
+		if (control) {
+			return "editControlWarehouse";
+		} else  {
+			return "editWarehouse";
+		} 
 	}
 
 	@GetMapping("/createWarehouse")

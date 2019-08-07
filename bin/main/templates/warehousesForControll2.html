@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/header :: shared-header" />
+
+</head>
+<body>
+
+	<div th:replace="common/navbar :: navbar-group (userId=${user.id})" /></div>
+	<div class="container">
+		<!-- Page Content -->
+		<br>
+		<div th:if="${not #lists.isEmpty(warehouses.content)}"
+			class="col-lg-9 addPadding">
+
+			<table class="table table-hover">
+				<tr>
+					<th>Vrsta</th>
+					<th>Ime</th>
+					<th>Volumen</th>
+					<th>Adresa</th>
+					<th>Dnevna cijena (HRK)</th>
+					<th>Početna cijena aukcije (HRK)</th>
+				</tr>
+
+				<tr th:each="warehouse, iStat : ${warehouses}">
+					<td>
+						<input type="text" id="name"
+							th:value="${warehouse.warehouseTypeName}" readonly="readonly"
+							class="form-control-plaintext" onfocus="this.blur()"
+							th:name="warehouseTypeName" th:id="warehouseTypeName">
+					</td>
+					<td>
+						<input type="text" id="volume" th:value="${warehouse.name}"
+							readonly="readonly" class="form-control-plaintext"
+							onfocus="this.blur()" th:name="name" th:id="name">
+					</td>
+					<td>
+						<input type="text" id="volume" th:value="${warehouse.volume}"
+							readonly="readonly" class="form-control-plaintext"
+							onfocus="this.blur()" th:name="volume" th:id="volume">
+					</td>
+					<td>
+						<input type="text" id="address" th:value="${warehouse.address}"
+							readonly="readonly" class="form-control-plaintext"
+							onfocus="this.blur()" th:name="address" th:id="address">
+					</td>
+					<td>
+						<input type="text" id="dailyPrice"
+							th:value="${warehouse.dailyPrice}" readonly="readonly"
+							class="form-control-plaintext" onfocus="this.blur()"
+							th:name="dailyPrice" th:id="dailyPrice">
+					</td>
+					<td>
+						<input type="text" readonly="readonly" class="form-control-plaintext"
+							onfocus="this.blur()" id="inputPrice" th:value="${warehouse.auctionStartPrice}"
+							th:name="auctionStartPrice" th:id="auctionStartPrice">
+					</td>
+					<td>
+						<a class="btn btn-info btn-sm"
+							th:href="@{/findWarehouse(warehouseId=${warehouse.id}, control=true)}">
+							Uredi </a>
+					</td>
+					<td>
+						<input type="hidden" id="warehouseId" th:value="${warehouse.id}"
+							th:name="warehouseId" th:id="warehouseId">
+						<input type="hidden" id="warehouseIdss" th:value="${user.id}"
+							th:name="userId" th:id="userId">
+					</td>
+				</tr>
+
+			</table>
+
+
+			<hr />
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i : ${#numbers.sequence(0,warehouses.totalPages-1)}">
+					<a th:href="@{${#httpServletRequest.requestURI}(page=${i})}"
+						th:text="${i+1} " class="nav-link"
+						th:classappend="${currentPage}==${i}?'active' : ''"></a>
+			</ul>
+		</div>
+		<div th:if="${#lists.isEmpty(warehouses.content)}"
+			class="col-lg-9 addPadding">
+			<p class="addPadding">Nema rezultata</p>
+		</div>
+
+		<div id="confirmDeleteModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="deleteWarehouseForm" th:action="@{/deleteWarehouse}"
+						th:method="DELETE">
+						<div class="modal-header">
+							<h4 class="modal-title" id="modalTitle">Brisanje skladišta</h4>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+						</div>
+						<div class="modal-body">
+							<p th:text="'Jeste sigurni da želite obrisati ovo skladište?'"></p>
+							<input type="hidden" id="warehouseId" th:id="warehouseId"
+								th:name="warehouseId" />
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" data-dismiss="modal"
+								value="Otkaži">
+							<input type="submit" class="btn btn-danger" value="Potvrdi">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- /container -->
+	<div th:replace="common/footer :: bottom-script"></div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
+</body>
+</html>

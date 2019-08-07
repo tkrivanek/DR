@@ -1,7 +1,6 @@
 package com.vvg.krivanek.warehouserental.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,7 @@ public class UserWarehouseController {
 	WarehouseService warehouseService;
 
 	@GetMapping("/rentWarehouse")
-	public String findWarehouse(@RequestParam(name = "warehouseIds", required = true) String warehouseId,
+	public String findWarehouse(@RequestParam(name = "warehouseId", required = true) String warehouseId,
 			UserWarehouse userWarehouse, Model model) {
 		model.addAttribute("warehouse", warehouseService.getWarehouse(warehouseId));
 		if (SecurityContextHolder.getContext().getAuthentication() != null) {
@@ -70,6 +69,6 @@ public class UserWarehouseController {
 	public String cancelWarehouseRent(@RequestParam(name = "userId", required = true) String userId,
 			@RequestParam(name = "warehouseId", required = true) String warehouseId) {
 		userWarehouseService.cancelWarehouseRent(userId, warehouseId);
-		return "redirect:/getUserWarehouses?userId="+userId;
+		return "redirect:/getUserWarehouses?userId="+userId + "&page=0";
 	}
 }

@@ -48,5 +48,12 @@ public class WarehouseRentalConfiguration extends WebSecurityConfigurerAdapter{
 	    public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
 	    }
-
+	    
+//	    @Bean
+//	    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
+//	        final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//	        templateEngine.setTemplateResolver(templateResolver);
+//	        templateEngine.addDialect(sec); // Enable use of "sec"
+//	        return templateEngine;
+//	    }
 }

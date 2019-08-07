@@ -3,59 +3,114 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head></head>
 <body>
-	<div th:fragment="navbar-group (userId)" class="container">
-		<!-- Navigation -->
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-			<div class="container">
-				<a class="navbar-brand" href="#">Iznajmljivanje skladišta</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarResponsive" aria-controls="navbarResponsive"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarResponsive">
+	<div th:fragment="navbar-group (userId)">
+	<!-- Mobile Nav (max width 767px)-->
+        <div class="mobile-nav">
+            <!-- Navbar Brand -->
+            <div class="amado-navbar-brand">
+                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+            </div>
+            <!-- Navbar Toggler -->
+            <div class="amado-navbar-toggler">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
 
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/}">Početna</a>
-						</li>
-						<li class="nav-item ">
-							<a class="nav-link" th:href="@{/getWarehouses(notRented=true, page=0)}">
-								Pregled slobodnih skladišta
-								<span class="sr-only">(current)</span>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/getAllUserWarehouses(page=0)}">Prikaz
-								iznajmljenih skladišta</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" th:href="@{/getWarehouses(page=0)}">Prikaz
-								svih skladišta</a>
-						</li>
+        <!-- Header Area Start -->
+        <header class="header-area clearfix">
+            <!-- Close Icon -->
+            <div class="nav-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </div>
+            <!-- Logo -->
+            <div class="logo">
+                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+            </div>
+            <!-- Amado Nav -->
+            <nav class="amado-nav">
+                <ul>
+                    <li><a th:href="@{/}">Početna</a></li>
+                    <li><a th:href="@{/getWarehouses(notRented=true, page=0)}" th:classappend="${#httpServletRequest.requestURI}=='/getWarehouses'?'active' : ''">Pregled slobodnih skladišta</a></li>
+                    <li><a th:href="@{/getAllUserWarehouses(page=0)}">Pregled iznajmljenih skladišta</a></li>
+                    <li><a th:href="@{/getWarehouses(page=0)}">Pregled svih skladišta</a></li>
+                    <li><a th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja iznajmljena skladišta</a></li>
+                    <li><a th:href="@{/getWarehousesForControl(userId=${userId}, page=0)}">Skladišta za kontrolu</a></li>
+                    <li><a th:href="@{/getAuctions(page=0)}">Skladišta na aukciji</a></li>
+                    <li><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </nav>
+            <!-- Button Group -->
+            <div class="amado-btn-group mt-30 mb-100">
+                <a href="#" class="btn amado-btn mb-15" th:text =${#httpServletRequest.requestURI}></a>
+                <a href="#" class="btn amado-btn active">New this week</a>
+            </div>
+            <!-- Cart Menu -->
+            <div class="cart-fav-search mb-100">
+                <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
+                <a href="#" class="fav-nav"><img src="img/core-img/favorites.png" alt=""> Favourite</a>
+                <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
+            </div>
+            <!-- Social Button -->
+            <div class="social-info d-flex justify-content-between">
+                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+        </header>
+        <!-- Header Area End -->
+<!-- 		<!-- Navigation --> 
+<!-- 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<a class="navbar-brand" href="#">Iznajmljivanje skladišta</a> -->
+<!-- 				<button class="navbar-toggler" type="button" data-toggle="collapse" -->
+<!-- 					data-target="#navbarResponsive" aria-controls="navbarResponsive" -->
+<!-- 					aria-expanded="false" aria-label="Toggle navigation"> -->
+<!-- 					<span class="navbar-toggler-icon"></span> -->
+<!-- 				</button> -->
+<!-- 				<div class="collapse navbar-collapse" id="navbarResponsive"> -->
+
+<!-- 					<ul class="navbar-nav ml-auto"> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" th:href="@{/}">Početna</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item "> -->
+<!-- 							<a class="nav-link" th:href="@{/getWarehouses(notRented=true, page=0)}"> -->
+<!-- 								Pregled slobodnih skladišta -->
+<!-- 								<span class="sr-only">(current)</span> -->
+<!-- 							</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" th:href="@{/getAllUserWarehouses(page=0)}">Prikaz -->
+<!-- 								iznajmljenih skladišta</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" th:href="@{/getWarehouses(page=0)}">Prikaz -->
+<!-- 								svih skladišta</a> -->
+<!-- 						</li> -->
 
 
-						<li class="nav-item">
-							<a class="nav-link"
-								th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja
-								iznajmljena skladišta</a>
-						</li>
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" -->
+<!-- 								th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja -->
+<!-- 								iznajmljena skladišta</a> -->
+<!-- 						</li> -->
 						
-						<li class="nav-item">
-							<a class="nav-link"
-								th:href="@{/getWarehousesForControl(userId=${userId}, page=0)}">Skladišta za kontrolu</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link"
-								th:href="@{/getAuctions(page=0)}">Aukcija</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link " th:href="@{/logout}">Logout</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" -->
+<!-- 								th:href="@{/getWarehousesForControl(userId=${userId}, page=0)}">Skladišta za kontrolu</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link" -->
+<!-- 								th:href="@{/getAuctions(page=0)}">Aukcija</a> -->
+<!-- 						</li> -->
+<!-- 						<li class="nav-item"> -->
+<!-- 							<a class="nav-link " th:href="@{/logout}">Logout</a> -->
+<!-- 						</li> -->
+<!-- 					</ul> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</nav> -->
 
 
 

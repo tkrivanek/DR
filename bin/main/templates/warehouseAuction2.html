@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="common/header :: shared-header" />
+<script type="text/javascript"
+	th:src="@{static/js/bootstrap-datepicker.js}"
+	src="../static/js/bootstrap-datepicker.js"></script>
+
+<link href="../static/css/datepicker3.css" rel="stylesheet"
+	th:href="@{/css/datepicker3.css}" />
+</head>
+<body>
+	<div th:replace="common/navbar :: navbar-group (userId=${user.id})" /></div>
+	<div class="container">
+		<!-- Page Content -->
+		<br>
+		<form th:object="${auctionBid}" th:action="@{/warehouseAuctionBid}"
+			method="post" class="addPadding">
+
+			<div class="form-group">
+				<h4 th:text="'Unajmljivanje skladišta'"></h4>
+
+				<input type="hidden" id=id th:value="${warehouseAuction.id}"
+					th:name="warehouseAuctionId" th:id="warehouseAuctionId">
+
+				<input type="hidden" id="userId"
+					th:value="${user.id}" th:name=userId
+					th:id="userId">
+
+				<label>Naziv skladišta:</label>
+				<label th:text="${warehouseAuction.warehouse.name}"></label>
+				<!-- 				<input type="text"  id="name" th:field ="${warehouseAuction.warehouse.name}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()" > -->
+
+				<label>Volumen skladišta:</label>
+				<label th:text="${warehouseAuction.warehouse.volume}"></label>
+				<!-- 				<input type="text"  id="volume" th:field ="${warehouseAuction.warehouse.volume}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<label>Adresa skladišta:</label>
+				<label th:text="${warehouseAuction.warehouse.address}"></label>
+				<!-- 				<input type="text"  id="address" th:field ="${warehouseAuction.warehouse.address}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<label>Dnevna cijena skladišta:</label>
+				<label th:text="${warehouseAuction.warehouse.dailyPrice}"></label>
+				<!-- 				<input type="text"  id="dailyPrice" th:field ="${warehouseAuction.warehouse.dailyPrice}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<label>Početak aukcije</label>
+				<label th:text="${warehouseAuction.startDate}"></label>
+				<!-- 				<input type="text"  id="startDate" th:field ="${warehouseAuction.startDate}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<label>Završetak aukcije</label>
+				<label th:text="${warehouseAuction.endDate}"></label>
+				<!-- 				<input type="text"  id="endDatetDate" th:field ="${warehouseAuction.endDate}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<label>Početna cijena aukcije</label>
+				<label th:text="${warehouseAuction.startPrice}"></label>
+				<!-- 				<input type="text"  id="startPrice" th:field ="${warehouseAuction.startPrice}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<!-- 				<label for="bidPrice">Trenutna cijena aukcije</label> -->
+				<!-- 				<input type="text"  id="bidPrice" th:value ="${warehouseAuction.bidPrice}" readonly="readonly" class="form-control-plaintext" onfocus="this.blur()"> -->
+
+				<label>Trenutna cijena aukcije</label>
+				<label th:text="${warehouseAuction.bidPrice}"></label>
+				
+				<label for="bidPrice">Vaša ponuda</label>
+				<input type="text" class="input-sm form-control" name="bidPrice"
+					id="bidPrice" th:name="bidPrice" th:id="bidPrice"
+					autocomplete="off" required="required" />
+
+				<button type="submit" class="btn btn-success">Potvrdi
+					ponudu</button>
+				<button type="button" class="btn btn-danger" data-toggle="modal"
+					data-target="#confirmCancelModal">Odustani</button>
+			</div>
+		</form>
+		<!-- Modal -->
+		<div class="modal fade" id="confirmCancelModal" tabindex="-1"
+			role="dialog" aria-labelledby="confirmCancelModal" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalCenterTitle">Želite
+							odustati?</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<!--<div class="modal-body">...</div>-->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success btn-sm"
+							data-dismiss="modal">Nastavi</button>
+
+						<a class="btn btn-danger btn-sm"
+							th:href="@{/getWarehouses(page=1)}">
+							Odbaci promjene
+							<span class="sr-only">(current)</span>
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- /container -->
+	<div th:replace="common/footer :: bottom-script" /></div>
+
+</body>
+</html>
