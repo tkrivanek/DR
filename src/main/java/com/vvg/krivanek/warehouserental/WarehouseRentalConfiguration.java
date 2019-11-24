@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
 @EnableWebSecurity
 public class WarehouseRentalConfiguration extends WebSecurityConfigurerAdapter{
@@ -50,10 +51,7 @@ public class WarehouseRentalConfiguration extends WebSecurityConfigurerAdapter{
 	    }
 	    
 //	    @Bean
-//	    public SpringTemplateEngine templateEngine(ITemplateResolver templateResolver, SpringSecurityDialect sec) {
-//	        final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//	        templateEngine.setTemplateResolver(templateResolver);
-//	        templateEngine.addDialect(sec); // Enable use of "sec"
-//	        return templateEngine;
+//	    public SpringSecurityDialect securityDialect() {
+//	        return new SpringSecurityDialect();
 //	    }
 }
