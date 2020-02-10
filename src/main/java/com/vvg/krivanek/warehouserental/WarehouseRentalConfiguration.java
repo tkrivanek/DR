@@ -23,16 +23,22 @@ public class WarehouseRentalConfiguration extends WebSecurityConfigurerAdapter{
 	 @Override
 	    protected void configure(HttpSecurity http) throws Exception
 	    {
-	        http.httpBasic()
-	            .and()
-	            .authorizeRequests()
-	            .anyRequest().authenticated()
-	            .and()
-	            .logout()
-	            .logoutUrl("/logout")                                                 
-	            .logoutSuccessUrl("/")
-	            .invalidateHttpSession(true)
-	            .deleteCookies("JSESSIONID")
+	        http
+	        .authorizeRequests()
+            .antMatchers("src/main/resources/static/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .and()
+            .logout()
+            .permitAll()
+//	            .logout()
+//	            .logoutUrl("/logout")                                                 
+//	            .logoutSuccessUrl("/")
+//	            .invalidateHttpSession(true)
+//	            .deleteCookies("JSESSIONID")
 	            .and()
 	            .csrf().disable();    
 	    }

@@ -53,9 +53,6 @@
             <nav class="amado-nav mb-100">
                 <ul>
                     <li class="active"><a th:href="@{/}">Početna</a></li>
-                    <li><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a></li>
-                    <li><a th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a></li>
-                    <li><a th:href="@{/logout}">Logout</a></li>
                 </ul>
             </nav>
            
@@ -68,113 +65,7 @@
             </div>
         </header>
         <!-- Header Area End -->
-
-        <!-- Product Catagories Area Start -->
-        <div class="products-catagories-area clearfix">
-            <div class="amado-pro-catagory clearfix">
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                      <img src="img/bg-img/1.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 50 HRK</p>
-                            <h4>Privatna skladišta</h4>
-                        </div>
-                    
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/2.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 75 HRK</p>
-                            <h4>Privatna skladišta</h4>
-                        </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/3.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 200 HRK</p>
-                            <h4>Komercijalno skladište</h4>
-                        </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/4.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 300 HRK</p>
-                            <h4>Komercijalno skladište s klimatizacijom</h4>
-                        </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/5.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 150</p>
-                            <h4>Privatna skladišta s klimatizacijom</h4>
-                        </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/6.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 200 HRK</p>
-                            <h4>Privatno za upotrebu</h4>
-                        </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/7.jpg" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>Od 300 HRK</p>
-                            <h4>Komercijalno skladište s klimatizacijom</h4>
-                        </div>
-                </div>
-
-<!--                 Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/8.jpg" alt="">
-<!--                         Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                             <p>Od 300 HRK</p>
-                            <h4>Komercijalno skladište s klimatizacijom</h4>
-                        </div>
-                </div>
-
-                <!-- Single Catagory -->
-                <div class="single-products-catagory clearfix">
-                    <img src="img/bg-img/9.jpg" alt="">
-<!--                         Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                             <p>Od 150 HRK</p>
-                            <h4>Privatna skladišta</h4>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <!-- Product Catagories Area End -->
+        
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 
@@ -206,15 +97,6 @@
                                     <ul class="navbar-nav ml-auto">
                                     	<li class="nav-item active">
                                             <a class="nav-link" th:href="@{/}">Početna</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/logout}">Logout</a>
                                         </li>
                                     </ul>
                                 </div>

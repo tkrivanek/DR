@@ -53,11 +53,12 @@
             </div>
             <!-- Amado Nav -->
             <nav class="amado-nav mb-100">
-             <div sec:authentication="name"></div>
+             <span th:text="${user.name} + ' ' +${user.surname} "></span>
+
                 <ul>
                     <li><a th:href="@{/}">Početna</a></li>
                     <li><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a></li>
-                    <li class="active"><a th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja iznajmljena skladišta</a></li>
+                    <li class="active"><a th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a></li>
                     <li><a th:href="@{/logout}">Logout</a></li>
                     
                 </ul>
@@ -208,7 +209,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                             <a class="nav-link" th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja iznajmljena skladišta</a>
+                                            <a class="nav-link active" th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" th:href="@{/logout}">Logout</a>

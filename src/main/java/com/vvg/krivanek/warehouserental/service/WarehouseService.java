@@ -1,24 +1,64 @@
 package com.vvg.krivanek.warehouserental.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+import com.vvg.krivanek.warehouserental.dao.service.UserWarehouseDaoService;
+import com.vvg.krivanek.warehouserental.dao.service.WarehouseAuctionDaoService;
+import com.vvg.krivanek.warehouserental.dao.service.WarehouseDaoService;
 import com.vvg.krivanek.warehouserental.domain.Warehouse;
+import com.vvg.krivanek.warehouserental.service.WarehouseService;
 
-public interface WarehouseService {
+@Service
+public class WarehouseService {
 
-//	void warehouseScheduler();
+	@Autowired
+	WarehouseDaoService warehouseDaoService;
 
-	Page<Warehouse> getWarehouses(boolean notRented, boolean auction, Pageable pageable);
+	@Autowired
+	UserWarehouseDaoService userWarehouseDaoService;
 
-	Warehouse getWarehouse(String warehouseId);
+	@Autowired
+	WarehouseAuctionDaoService warehouseAuctionDaoService;
 
-	void saveWarehouse(Warehouse warehouse);
+	private static final String WAREHOUSE_STATUS_READY_FOR_AUCTION = "4";
 
-	void updateWarehouse(Warehouse warehouse, boolean control);
+////	@Scheduled(cron = "0 0 23 * * ?")
+//	@Scheduled(fixedDelay = 1000)
+//	public void warehouseScheduler() {
+//		
+//	}
 
-	void deleteWarehouse(String warehouseId);
+	public Page<Warehouse> getWarehouses(boolean notRented, boolean auction, Pageable pageable) {
+		return warehouseDaoService.getPagedWarehouses(notRented, auction, pageable);
 
-	Page<Warehouse> getControllReadyWarehouses(Pageable pageable);
+	}
+
+	public Warehouse getWarehouse(String warehouseId) {
+		return warehouseDaoService.getWarehouseById(warehouseId);
+	}
+
+	public void saveWarehouse(Warehouse warehouse) {
+		warehouseDaoService.saveWarehouse(warehouse);
+	}
+
+	public void updateWarehouse(Warehouse warehouse, boolean control) {
+		if (control) {
+			warehouse.setWarehouseStatusId(WAREHOUSE_STATUS_READY_FOR_AUCTION);
+		}
+		warehouseDaoService.updateWarehouse(warehouse);
+
+	}
+
+	public void deleteWarehouse(String warehouseId) {
+		warehouseDaoService.deleteWarehouse(warehouseId);
+
+	}
+
+	public Page<Warehouse> getControllReadyWarehouses(Pageable pageable) {
+		return warehouseDaoService.getControllReadyWarehouses(pageable);
+	}
 
 }

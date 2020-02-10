@@ -55,7 +55,7 @@
                 <ul>
                     <li><a th:href="@{/}">Početna</a></li>
                     <li class="active"><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a></li>
-                    <li><a th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja iznajmljena skladišta</a></li>
+                    <li><a th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a></li>
                     <li><a th:href="@{/logout}">Logout</a></li>
                 </ul>
             </nav>
@@ -84,7 +84,7 @@
                     <li><a th:href="@{/getAllUserWarehouses(page=0)}">Pregled iznajmljenih skladišta</a></li>
                     <li><a th:href="@{/getWarehouses(page=0)}">Pregled svih skladišta</a></li>
                     <li><a th:href="@{/getAuctions(page=0)}">Skladišta na aukciji</a></li>
-                    <li class="active"><a th:href="@{/getWarehousesForControl(userId=${userId}, page=0)}">Skladišta za kontrolu</a></li>
+                    <li class="active"><a th:href="@{/getWarehousesForControl(page=0)}">Skladišta za kontrolu</a></li>
                     </ul>
                 </div>
             </div>
@@ -202,7 +202,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                             <a class="nav-link active" th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" th:href="@{/getUserWarehouses(userId=${userId}, page=0)}">Moja iznajmljena skladišta</a>
+                                            <a class="nav-link" th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" th:href="@{/logout}">Logout</a>

@@ -30,6 +30,15 @@ public class WarehouseController {
 	@Autowired
 	WarehouseStatusService warehouseStatusService;
 
+	@GetMapping("/")
+	public String getIndex(Model model) {
+		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+			model.addAttribute("user",
+					userDaoService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		}
+		return "index"; // view
+	}
+	
 	@GetMapping("/getWarehouses")
 	public String getWarehouses(@RequestParam(name = "notRented", required = false) boolean notRented,
 			@RequestParam(name = "auction", required = false) boolean auction,
