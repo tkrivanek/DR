@@ -25,26 +25,31 @@ public class WarehouseRentalConfiguration extends WebSecurityConfigurerAdapter{
 	    {
 	        http
 	        .authorizeRequests()
-            .antMatchers("src/main/resources/static/**").permitAll()
+	        .antMatchers(
+                    "/",
+                    "/css/**",
+                    "/fonts/**",
+                    "/icons/**",
+                    "/img/**",
+                    "/jquery/**",
+                    "/js/**",
+                    "/locales/**").permitAll()
+	        .antMatchers("/index").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/login")
+            .defaultSuccessUrl("/getWarehouses")
             .permitAll()
             .and()
             .logout()
             .permitAll()
-//	            .logout()
-//	            .logoutUrl("/logout")                                                 
-//	            .logoutSuccessUrl("/")
-//	            .invalidateHttpSession(true)
-//	            .deleteCookies("JSESSIONID")
-	            .and()
-	            .csrf().disable();    
+	        .and()
+	        .csrf().disable();    
 	    }
-	    
-	    @Autowired
-	    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
+	     
+	 @Override
+	    protected void configure(AuthenticationManagerBuilder auth) throws Exception
 	    {
 	        auth.jdbcAuthentication().dataSource(dataSource)
 	            .authoritiesByUsernameQuery("SELECT USER.username, ROLE.code FROM warehouse_db.user USER, warehouse_db.user_role ROLE where USER.username = ROLE.username AND USER.username = ?")
@@ -55,9 +60,4 @@ public class WarehouseRentalConfiguration extends WebSecurityConfigurerAdapter{
 	    public PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
 	    }
-	    
-//	    @Bean
-//	    public SpringSecurityDialect securityDialect() {
-//	        return new SpringSecurityDialect();
-//	    }
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -54,8 +55,10 @@
                 <ul>
                     <li class="active"><a th:href="@{/}">Početna</a></li>
                     <li><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a></li>
-                    <li><a th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a></li>
-                    <li><a th:href="@{/logout}">Logout</a></li>
+                    <li sec:authorize="isAuthenticated()" ><a th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a></li>
+                    <li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">Logout</a></li>
+                    <li><a th:href="@{/login}">Prijava</a></li>
+                    <li><a th:href="@{/login}">Registracija</a></li>
                 </ul>
             </nav>
            
@@ -210,10 +213,10 @@
                                         <li class="nav-item">
                                             <a class="nav-link" th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <li sec:authorize="isAuthenticated()" class="nav-item">
                                             <a class="nav-link" th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <li sec:authorize="isAuthenticated()" class="nav-item">
                                             <a class="nav-link" th:href="@{/logout}">Logout</a>
                                         </li>
                                     </ul>

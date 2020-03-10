@@ -19,6 +19,7 @@ import com.vvg.krivanek.warehouserental.service.WarehouseTypeService;
 
 @Controller
 public class WarehouseController {
+	
 	@Autowired
 	WarehouseService warehouseService;
 	@Autowired
@@ -32,13 +33,13 @@ public class WarehouseController {
 
 	@GetMapping("/")
 	public String getIndex(Model model) {
-		if (SecurityContextHolder.getContext().getAuthentication() != null) {
+		if (SecurityContextHolder.getContext().getAuthentication() != null && !"anonymousUser".equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
 			model.addAttribute("user",
 					userDaoService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		}
 		return "index"; // view
 	}
-	
+
 	@GetMapping("/getWarehouses")
 	public String getWarehouses(@RequestParam(name = "notRented", required = false) boolean notRented,
 			@RequestParam(name = "auction", required = false) boolean auction,
@@ -86,9 +87,9 @@ public class WarehouseController {
 		}
 		if (control) {
 			return "editControlWarehouse";
-		} else  {
+		} else {
 			return "editWarehouse";
-		} 
+		}
 	}
 
 	@GetMapping("/createWarehouse")
