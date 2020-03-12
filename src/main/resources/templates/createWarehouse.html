@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div class="container">
-		<div th:replace="common/navbar :: navbar-group (userId=${user.id})" /></div>
+		 <div th:replace="fragments/navbar :: navbar"></div>
 
 		<!-- Page Content -->
 		<div class="container addPadding">
@@ -100,6 +100,6 @@
 		<!-- /.container -->
 	</div>
 	<!-- /container -->
-	<div th:replace="common/footer :: bottom-script" /></div>
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

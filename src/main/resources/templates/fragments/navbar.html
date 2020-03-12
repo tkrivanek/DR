@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Aplikacija za praktični dio diplomskog rada">
+	<meta name="author" content="Tomislav Krivanek">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title  -->
+    <title>Skladišta</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="img/core-img/favicon.ico">
+
+    <!-- Core Style CSS -->
+    <link href="../static/css/warehouse.css" rel="stylesheet" th:href="@{/css/warehouse.css}" />
+	<link href="../static/css/bootstrap-datepicker3.css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" />
+	<link href="../static/css/core-style.css" rel="stylesheet" th:href="@{/css/core-style.css}" />
+
+</head>
+
+<body>
+	<div th:fragment="navbar">
+        <!-- Mobile Nav (max width 767px)-->
+        <div class="mobile-nav">
+            <!-- Navbar Brand -->
+            <div class="amado-navbar-brand">
+                <a th:href="@{/}"><img src="img/core-img/logo.png" alt=""></a>
+            </div>
+            <!-- Navbar Toggler -->
+            <div class="amado-navbar-toggler">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- Header Area Start -->
+        <header class="header-area clearfix">
+            <!-- Close Icon -->
+            <div class="nav-close">
+                <i class="fa fa-close" aria-hidden="true"></i>
+            </div>
+            <!-- Logo -->
+            <div class="logo">
+                <a th:href="@{/}"><img src="img/core-img/logo.png" alt=""></a>
+            </div>
+            <!-- Amado Nav -->
+            <nav class="amado-nav mb-100">
+                <ul>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}"><a th:href="@{/}">Početna</a></li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/getWarehouses' || #httpServletRequest.getRequestURI() == '/getAllUserWarehouses' ? 'active':''}"><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled skladišta</a></li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/getUserWarehouses' ? 'active':''}" sec:authorize="isAuthenticated()"><a th:href="@{/getUserWarehouses(userId=${user.id}, page=0)}">Moja iznajmljena skladišta</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                    <li><a th:href="@{/login}">Prijava</a></li>
+                    <li><a th:href="@{/login}">Registracija</a></li>
+                </ul>
+            </nav>
+           
+           <!-- Social Button -->
+            <div class="social-info d-flex justify-content-between">
+                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+        </header>
+        <!-- Header Area End -->
+        </div>
+
+</body>
+
+</html>
