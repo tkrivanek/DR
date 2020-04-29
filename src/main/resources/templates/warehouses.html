@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Aplikacija za praktični dio diplomskog rada">
-	<meta name="author" content="Tomislav Krivanek">
+    <meta name="author" content="Tomislav Krivanek">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -18,8 +17,8 @@
 
     <!-- Core Style CSS -->
     <link href="../static/css/warehouse.css" rel="stylesheet" th:href="@{/css/warehouse.css}" />
-	<link href="../static/css/bootstrap-datepicker3.css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" />
-	<link href="../static/css/core-style.css" rel="stylesheet" th:href="@{/css/core-style.css}" />
+    <link href="../static/css/bootstrap-datepicker3.css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" />
+    <link href="../static/css/core-style.css" rel="stylesheet" th:href="@{/css/core-style.css}" />
 
 </head>
 
@@ -28,27 +27,9 @@
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 
-       <div th:replace="fragments/navbar :: navbar"></div>
+        <div th:replace="fragments/navbar :: navbar"></div>
 
- <div class="shop_sidebar_area">
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Kategorije</h6>
-
-                <!--  Catagories  -->
-                <div class="catagories-menu">
-                    <ul>
-                    <li th:classappend="${notRented} ? active : ''"><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled slobodnih skladišta</a></li>
-                    <li><a th:href="@{/getAllUserWarehouses(page=0)}">Pregled iznajmljenih skladišta</a></li>
-                    <li th:classappend="${not notRented} ? active : ''"><a th:href="@{/getWarehouses(page=0)}">Pregled svih skladišta</a></li>
-                    <li><a th:href="@{/getAuctions(page=0)}">Skladišta na aukciji</a></li>
-                    <li><a th:href="@{/getWarehousesForControl(page=0)}">Skladišta za kontrolu</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div th:replace="fragments/sidebar :: sidebar"></div>
 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid">
@@ -60,7 +41,7 @@
                             <div class="total-products">
                                 <p th:if="${notRented}">Slobodna skladišta</p>
                                 <p th:if="${not notRented}">Sva skladišta</p>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,14 +49,15 @@
                 <div class="row">
 
                     <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6" th:if="${not #lists.isEmpty(warehouses.content)}" th:each="warehouse, iStat : ${warehouses}">
+                    <div class="col-12 col-sm-6 col-md-12 col-xl-6" th:if="${not #lists.isEmpty(warehouses.content)}"
+                        th:each="warehouse, iStat : ${warehouses}">
                         <div class="single-product-wrapper">
-                            <!-- Product Image --> 
+                            <!-- Product Image -->
                             <div class="product-img">
-                            <a th:href="@{/rentWarehouse(warehouseId=${warehouse.id})}">
-                                <img src="img/product-img/product1.jpg" alt="">
-                                <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product2.jpg" alt="">
+                                <a th:href="@{/rentWarehouse(warehouseId=${warehouse.id})}">
+                                    <img src="img/product-img/product1.jpg" alt="">
+                                    <!-- Hover Thumb -->
+                                    <img class="hover-img" src="img/product-img/product2.jpg" alt="">
                                 </a>
                             </div>
 
@@ -102,15 +84,17 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </div>
                                     <div class="cart" th:if="${not notRented}">
-                                        <a th:href="@{/findWarehouse(warehouseId=${warehouse.id})}" data-toggle="tooltip" data-placement="left" title="Uredi skladište"><img src="img/core-img/edit.png" alt=""></a>
-                                    	<p th:text="${warehouse.warehouseStatusName}"></p>
+                                        <a th:href="@{/findWarehouse(warehouseId=${warehouse.id})}"
+                                            data-toggle="tooltip" data-placement="left" title="Uredi skladište"><img
+                                                src="img/core-img/edit.png" alt=""></a>
+                                        <p th:text="${warehouse.warehouseStatusName}"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    
+
                 </div>
 
                 <div class="row">

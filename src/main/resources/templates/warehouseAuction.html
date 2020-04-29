@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Aplikacija za praktični dio diplomskog rada">
-	<meta name="author" content="Tomislav Krivanek">
+    <meta name="author" content="Tomislav Krivanek">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -18,127 +17,124 @@
 
     <!-- Core Style CSS -->
     <link href="../static/css/warehouse.css" rel="stylesheet" th:href="@{/css/warehouse.css}" />
-	<link href="../static/css/bootstrap-datepicker3.css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" />
-	<link href="../static/css/core-style.css" rel="stylesheet" th:href="@{/css/core-style.css}" />
+    <link href="../static/css/bootstrap-datepicker3.css" rel="stylesheet" th:href="@{/css/bootstrap-datepicker3.css}" />
+    <link href="../static/css/core-style.css" rel="stylesheet" th:href="@{/css/core-style.css}" />
 
 </head>
 
 
 <body>
-   
+
 
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 
-       <div th:replace="fragments/navbar :: navbar"></div>
+        <div th:replace="fragments/navbar :: navbar"></div>
 
-        <!-- Product Details Area Start -->
-        <div class="single-product-area section-padding-100 clearfix">
-            <div class="container-fluid">
+        <div th:replace="fragments/sidebar :: sidebar"></div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb mt-50">
-                                <li class="breadcrumb-item"><a th:href="@{/}">Početna</a></li>
-                                <li class="breadcrumb-item"><a th:href="@{/getAuctions(page=0)}">Pregled skladišta</a></li>
-                                <li class="breadcrumb-item"><a th:href="@{/getAuctions(page=0)}">Skladišta na aukciji</a></li>
-                                <li class="breadcrumb-item active" aria-current="page" th:text="${warehouseAuction.warehouse.name}"></li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-lg-7">
-                        <div class="single_product_thumb">
-                            <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(img/product-img/pro-big-1.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(img/product-img/pro-big-2.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(img/product-img/pro-big-3.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(img/product-img/pro-big-4.jpg);">
-                                    </li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/pro-big-2.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-2.jpg" alt="Second slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/pro-big-3.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-3.jpg" alt="Third slide">
-                                        </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/pro-big-4.jpg">
-                                            <img class="d-block w-100" src="img/product-img/pro-big-4.jpg" alt="Fourth slide">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-5">
-                        <div class="single_product_desc">
-                            <!-- Product Meta Data -->
-                            <div class="product-meta-data">
-                                <div class="line"></div>
-                                <p id="dailyPrice" class="product-price" th:text="${'Trenutna cijena ' + warehouseAuction.bidPrice +' HRK'}"></p>
-                                <a href="product-details.html">
-                                    <h6 th:text="${warehouseAuction.warehouse.name}"></h6>
+        <div class="row">
+            <div class="col-12 col-lg-7">
+                <div class="single_product_thumb">
+                    <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li class="active" data-target="#product_details_slider" data-slide-to="0"
+                                style="background-image: url(img/product-img/pro-big-1.jpg);">
+                            </li>
+                            <li data-target="#product_details_slider" data-slide-to="1"
+                                style="background-image: url(img/product-img/pro-big-2.jpg);">
+                            </li>
+                            <li data-target="#product_details_slider" data-slide-to="2"
+                                style="background-image: url(img/product-img/pro-big-3.jpg);">
+                            </li>
+                            <li data-target="#product_details_slider" data-slide-to="3"
+                                style="background-image: url(img/product-img/pro-big-4.jpg);">
+                            </li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a class="gallery_img" href="img/product-img/pro-big-1.jpg">
+                                    <img class="d-block w-100" src="img/product-img/pro-big-1.jpg" alt="First slide">
                                 </a>
-                                <!-- Ratings & Review -->
-                                <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                                    <div class="ratings">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                    </div>
-                                </div>
                             </div>
-
-                            <div class="short_overview my-5">
-                                <p th:text="${'Skladište naziva ' + warehouseAuction.warehouse.name + ' nalazi se na adresi ' + warehouseAuction.warehouse.address +'. 
-                                Volumen skladište iznosi ' + warehouseAuction.warehouse.volume + 'm3 i dnevna cijena najma iznosi ' + warehouseAuction.warehouse.dailyPrice + ' HRK.'}"></p>
-                            	<p th:text="${'Aukcija je započela ' + warehouseAuction.startDate + ', a završava ' + warehouseAuction.endDate + ' u 00:00'}"></p>
-                            	<p th:text="${'Početna cijena aukcije je ' + warehouseAuction.startPrice + ' HRK'}"></p>
+                            <div class="carousel-item">
+                                <a class="gallery_img" href="img/product-img/pro-big-2.jpg">
+                                    <img class="d-block w-100" src="img/product-img/pro-big-2.jpg" alt="Second slide">
+                                </a>
                             </div>
-
-                            <!-- Add to Cart Form -->
-                            <form class="cart clearfix"  th:object="${auctionBid}" th:action="@{/warehouseAuctionBid}" method="post">
-                                <div class="cart-btn d-flex mb-15">
-                                	<input type="hidden" id=id th:value="${warehouseAuction.id}" th:name="warehouseAuctionId" th:id="warehouseAuctionId">
-
-									<input type="hidden" id="userId" th:value="${user.id}" th:name=userId th:id="userId">
-                                    <p th:text="'Upišite svoju ponudu'"></p>
-                                 </div>
-                                 <div class="form-inline">
-									<div class="form-group ">
-										<input type="text" class="form-control mb-15" placeholder="Vaša ponuda" name="bidPrice" id="bidPrice" th:name="bidPrice" th:id="bidPrice"
-											autocomplete="off" required="required" />
-									</div>
- 				 				</div>
-                                <button type="submit" name="rent" class="btn amado-btn">Potvrdi ponudu</button>
-                            </form>
-
+                            <div class="carousel-item">
+                                <a class="gallery_img" href="img/product-img/pro-big-3.jpg">
+                                    <img class="d-block w-100" src="img/product-img/pro-big-3.jpg" alt="Third slide">
+                                </a>
+                            </div>
+                            <div class="carousel-item">
+                                <a class="gallery_img" href="img/product-img/pro-big-4.jpg">
+                                    <img class="d-block w-100" src="img/product-img/pro-big-4.jpg" alt="Fourth slide">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-lg-5">
+                <div class="single_product_desc">
+                    <!-- Product Meta Data -->
+                    <div class="product-meta-data">
+                        <div class="line"></div>
+                        <p id="dailyPrice" class="product-price"
+                            th:text="${'Trenutna cijena ' + warehouseAuction.bidPrice +' HRK'}"></p>
+                        <a href="product-details.html">
+                            <h6 th:text="${warehouseAuction.warehouse.name}"></h6>
+                        </a>
+                        <!-- Ratings & Review -->
+                        <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="short_overview my-5">
+                        <p
+                            th:text="${'Skladište naziva ' + warehouseAuction.warehouse.name + ' nalazi se na adresi ' + warehouseAuction.warehouse.address +'. 
+                                Volumen skladište iznosi ' + warehouseAuction.warehouse.volume + 'm3 i dnevna cijena najma iznosi ' + warehouseAuction.warehouse.dailyPrice + ' HRK.'}">
+                        </p>
+                        <p
+                            th:text="${'Aukcija je započela ' + warehouseAuction.startDate + ', a završava ' + warehouseAuction.endDate + ' u 00:00'}">
+                        </p>
+                        <p th:text="${'Početna cijena aukcije je ' + warehouseAuction.startPrice + ' HRK'}"></p>
+                    </div>
+
+                    <!-- Add to Cart Form -->
+                    <form class="cart clearfix" th:object="${auctionBid}" th:action="@{/warehouseAuctionBid}"
+                        method="post">
+                        <div class="cart-btn d-flex mb-15">
+                            <input type="hidden" id=id th:value="${warehouseAuction.id}" th:name="warehouseAuctionId"
+                                th:id="warehouseAuctionId">
+
+                            <input type="hidden" id="userId" th:value="${user.id}" th:name=userId th:id="userId">
+                            <p th:text="'Upišite svoju ponudu'"></p>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group ">
+                                <input type="text" class="form-control mb-15" placeholder="Vaša ponuda" name="bidPrice"
+                                    id="bidPrice" th:name="bidPrice" th:id="bidPrice" autocomplete="off"
+                                    required="required" />
+                            </div>
+                        </div>
+                        <button type="submit" name="rent" class="btn amado-btn">Potvrdi ponudu</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
-        <!-- Product Details Area End -->
+    </div>
+    </div>
+    <!-- Product Details Area End -->
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 

@@ -30,25 +30,7 @@
 
        <div th:replace="fragments/navbar :: navbar"></div>
 
-        <div class="shop_sidebar_area">
-
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Kategorije</h6>
-
-                <!--  Catagories  -->
-                <div class="catagories-menu">
-                    <ul>
-                    <li><a th:href="@{/getWarehouses(notRented=true, page=0)}">Pregled slobodnih skladišta</a></li>
-                    <li><a th:href="@{/getAllUserWarehouses(page=0)}">Pregled iznajmljenih skladišta</a></li>
-                    <li><a th:href="@{/getWarehouses(page=0)}">Pregled svih skladišta</a></li>
-                    <li class="active"><a th:href="@{/getAuctions(page=0)}">Skladišta na aukciji</a></li>
-                    <li><a th:href="@{/getWarehousesForControl(page=0)}">Skladišta za kontrolu</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+       <div th:replace="fragments/sidebar :: sidebar"></div>
 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid">
